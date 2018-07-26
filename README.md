@@ -1,8 +1,8 @@
 # 2018年笔记
 
-#### GitHub 使用
+### GitHub 使用
 
-<a href="./GitHub_guide.pdf">GitHub 简介</a>
+<a href="./GitHub_guide.pdf">GitHub 简易教程</a>
 
 ### 文件结构
 
@@ -13,7 +13,7 @@
 
 ### C++
 
-### python
+### Python
 
 ### Machine Learning
 
