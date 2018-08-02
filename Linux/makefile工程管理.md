@@ -61,7 +61,7 @@ main:=main.o
 # 该规则省略了如下
 # main.o:main.c
 #	gcc -c main.c
-# 即该规则缺省了上面的语句，但是makefile又一个自带的默认规则
+# 即该规则缺省了上面的语句，但是makefile有一个自带的默认规则
 # 例如上面编译.o，就默认缺省了:
 # cc -c -o main.o main.c 
 # 因而只用写上面最开始的一句就可以
@@ -92,7 +92,7 @@ CFLAGS:=-Wall
 ```makefile
 CC:=gcc			# 改变隐式的编译器
 CFLAGS:=-g -Wall # 改变预定义变量
-main:main.o
+main:main.o		# 主命令
 	gcc -o main main.o
 # 这样隐式编译就为
 # gcc -g -Wall -o main.o main.c
