@@ -21,7 +21,7 @@ makefile 自动化工具主要用处是，实现**增量编译**。
 例如：
 
 ```makefile
-main:main.c  # 目标文件，依赖文件
+main:main.c  # 目标文件:依赖文件
 	gcc main.c -o main	# 执行操作
 ```
 
