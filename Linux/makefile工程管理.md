@@ -68,6 +68,25 @@ main:=main.o
 # 该处的cc 就是makefile 预定义的变量，cc实际指默认系统自带的编译器
 ```
 
+#### makefile 模式规则
+
+模式规则，通过匹配模式来匹配字符串
+
+- %匹配1-n个字符，%.c即匹配所有.c文件
+
+#### makefile 函数
+
+- wildcard函数，搜索所有当前目录下匹配的文件名
+
+- patsubst函数，替换文件名，主要用于筛选出文件名的首部如main.c筛选出main。格式为```patsubst 原格式 新格式 替换字串来源```，该处是makefile内部函数参数，因而用%代表所有
+
+- ```makefile
+  SOURCE:=$(wildcard *.cpp)  #注意，此处*匹配所有字符串，因为该处是系统匹配，所以用*代表所有。该处匹配所有cpp文件
+  # 该语句的意思就是把当前文件夹下所有.cpp文件名复制给变量SOURCE
+  OBJS:=$(patsubst %.cpp %.o $(SOURCE)) #这样就把所有文件名首部提取出
+  # 并添加上.o后缀来
+  ```
+
 #### makefile 预定义变量
 
 - AR：库文件打包默认为ar，改变预定义标志为ARFLAGS
@@ -98,7 +117,20 @@ main:main.o		# 主命令
 # gcc -g -Wall -o main.o main.c
 ```
 
+#### makefile 自动变量
 
+自动变量是对于每一个匹配规则（包括，目标项，依赖想，对应执行操作代码），可以自动转义自动变量为相应的变量
+
+- $@：替换目标项目
+
+- ```makefile
+  ELF:=main
+  OBJS:=main.o
+  $(ELF):$(OBJS)	#一条匹配规则开始，ELF为目标项
+  	gcc $(OBJS) -o $@	# $@ 自动替换成ELF目标项
+  ```
+
+- $^：替换所有依赖文件，用法同上
 
 #### makefile伪命令：
 
@@ -115,3 +147,6 @@ clean:		# 定义clean 的具体内容
 make clean  # 该命令直接会删除main.o和func1.o
 ```
 
+### 级联实现makefile多级编译
+
+对于一个大型工程，在文件目录的每一个层级都添加一个Makefile文件，即多层级目录结构。通过**级联传递make命令的方式，实现整个工程的编译**。
