@@ -177,3 +177,125 @@ signal(SIGINT,SIG_DFL); // 恢复正常SIGIN信号的处理
 
 #### 高级信号注册函数sigaction
 
+#### SIGACTION 下的sig mask
+
+sig mask 可以为信号设置屏蔽字
+
+因为当不同信号类型的信号到来时，默认情况下，不同信号源是能打断本信号的。
+
+即，例如一号信号的处理函数正在执行，那吗默认此时1号信号不能打断自身，但是，当其他信号，例如2号信号到来，则就可以打断1信号的执行了。
+
+设置sigmask 的作用就是屏蔽某信号，即设置信号的屏蔽位。
+
+此时如果别的信号到来，且屏蔽位被置1，则该信号被称为**挂起状态**
+
+#### 当设置信号处理函数
+
+当设置信号处理函数时，我们是把整个函数名传递给sigaction
+
+所以函数的结构是固定好的，该函数由sigaction调用填写，所有的过程都是在内核中进行的
+
+该函数由sigid 和一个结构体组成，该结构体在执行中有内核填写调用，其中的字段反馈了一些**信号的详细信息**，包括那个进程调用，执行时间等等
+
+#### sigprocmask函数
+
+sigaction中设置的sigmask，只能屏蔽信号处理流程时信号的到来。换句话说，即此处的mask的作用域为处理函数。当处理函数结束后，屏蔽也就自然消失。
+
+sigprocmask函数可以设置mask，全程屏蔽某些信号。 
+
+### Kill 函数
+
+```c
+// kill 函数会向相应的进程发送特定的命令
+// 发送的id >0 指定特定的pid
+// pid > 0 将信号发给 ID 为 pid 的进程 
+// pid == 0 将信号发送给与发送进程属于同一个进程组的所有进程 
+// pid < 0 将信号发送给进程组 ID 等于 pid 绝对值的所有进程 
+// pid == -1 将信号发送给该进程有权限发送的系统里的所有进程
+ #include <sys/types.h>
+       #include <signal.h>
+
+       int kill(pid_t pid, int sig);
+```
+
+
+
+### 进程的睡眠计时器
+
+#### sleep函数
+
+```c
+unsigned int sleep(unsigned int second);
+// 让进程睡眠几秒
+// 机制为
+// 1. sleep首先设置一个三秒的定时器，该定时器会在时间到后向自己发送
+// 一个SIGALRM信号，该信号能够唤醒sleep
+// 2. 然后sleep去执行睡眠，也就是通过 调度 sched_yield 将自身挂起
+```
+
+#### alarm函数
+
+```c
+#include <unistd.h>
+
+     unsigned
+     alarm(unsigned seconds);
+
+```
+
+alarm 函数会在时间到后向主调函数主动发送一个**SIGALRM**信号，所以该函数一般不会与sleep函数一起用，否则会出现混乱。
+
+#### pause函数
+
+```c
+ #include <unistd.h>
+
+     int
+     pause(void);
+```
+
+程序内部挂起函数，等价于sched_yield。
+
+任何信号的传入，都能唤醒该函数
+
+### 计时器
+
+Linux系统为每个进程维护了3个计时器
+
+- 真实计时器，记录程序实际运行时间 (内核+用户+睡眠)
+- 虚拟计时器，记录用户态所消耗时间（即，用户）
+- 实用计时器，所有时间只和=内核态时间+用户态时间（不包括睡眠，= 内核+用户）
+
+```c
+ #include <sys/time.h>
+
+       int getitimer(int which, struct itimerval *curr_value);
+       int setitimer(int which, const struct itimerval *new_value,
+                     struct itimerval *old_value);
+// 获取定时器和设置定时器
+// which 处就填写设置那个计时器
+// which = ITIMER_REAL 真实计数器
+// = ITIMER_VIRTUAL 虚拟计数器
+// = ITIMER_PROF 实用计数器
+// itimerval 参数 为设置计数器的时间，即time的时间间隔
+// 时间间隔到了以后timer就会向进程发送 SIGALRM 信号
+//  struct itimerval {
+//		struct timeval it_interval; /* Interval for periodic timer */
+//		struct timeval it_value;    /* Time until next expiration */
+//	};
+// 该计时器设置时间的结构体如上，
+// 第一个参数为重复间隔， 假若等于2
+// 第二个参数为首次间隔 ，假若等于5
+// 则从0秒开始，该机器时向进程发送SIGALRM的时间点为 5,7,9,11,13
+// 即只有首次发送，间隔才是5秒
+
+
+```
+
+实际使用时，由于每隔一段时间，该进程就会向自身发送一个SIGALRM信号。
+
+则设置**捕捉SIGALRM信号的信号处理函数**，就可以实现每隔一段时间做一件事的功能。
+
+- 当用真实计时器时，发送的是**SIGALRM**信号
+- 当用实用计时器时，发送的是**SIGPROF**信号，使用该计时器时不统计睡眠时间。即该计时器累计时间时，不包含进程睡眠的时间
+- 虚拟计时器，使用的是SIGVTALRM信号，统计的时间也只包含虚拟计时器的范围
