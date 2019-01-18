@@ -29,12 +29,17 @@
 3. String
 
    ```python
-   #split()方法 可以传入分隔符，默认为空白
+   # split()方法 可以传入分隔符，默认为空白
    >>> line = 'aaa\nbbb\nccc\n'
    >>> line.split('\n')
    ['aaa','bbb','ccc','']
    >>> line.splitlines()
    ['aaa','bbb','ccc']
+
+   # find 方法, 返回首个匹配字符的index
+   mystr = 'xxxSPAMxxx'
+   mystr.find('SPAM')
+   3
    ```
 
 4. map
