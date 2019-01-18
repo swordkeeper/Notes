@@ -26,8 +26,7 @@
    len(bob) ##查看列表长度
    ```
 
-3. String 函数
-
+3. String 函数
    ```python
    # split()方法 可以传入分隔符，默认为空白
    >>> line = 'aaa\nbbb\nccc\n'
