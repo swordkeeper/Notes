@@ -110,8 +110,7 @@
    ```
 
 9. eval 和 repr 
-
-10. ```python
+    ```python
     # eval() 把str 变成 其值所对应的内容
     sss = '2'
     type(eval(sss)) # return 2
