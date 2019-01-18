@@ -26,7 +26,7 @@
    len(bob) ##查看列表长度
    ```
 
-3. String
+3. String 函数
 
    ```python
    # split()方法 可以传入分隔符，默认为空白
@@ -37,9 +37,31 @@
    ['aaa','bbb','ccc']
 
    # find 方法, 返回首个匹配字符的index
-   mystr = 'xxxSPAMxxx'
-   mystr.find('SPAM')
+   >>> mystr = 'xxxSPAMxxx'
+   >>> mystr.find('SPAM')
    3
+
+   # replace 方法，全局替换
+   >>> mystr = 'xaaxxxaa'
+   >>> mysgtr.replace('aa','SPAM')
+   'xSPAMxxxSPAM'
+
+   # strip 方法，去掉空白，包括\t \n 和空格
+   >>> mystr.strip()
+   >>> mystr.rstrip() #去掉字符串右边的空白
+
+   # lower(), upper()
+   >>> mystr.lower()
+   >>> mystr.upper()
+
+   # 测试字符内容
+   >>> mystr.isalpha()
+   >>> mystr.isdigit()
+
+   # string 包装类
+   >>> import string
+   >>> string.whitespace
+   ' \t\n\r\x0b\x0c'
    ```
 
 4. map

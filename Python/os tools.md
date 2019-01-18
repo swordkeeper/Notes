@@ -19,3 +19,11 @@ import signal, select, shutil, tempfile #多系统
    import os, sys
    dir(sys) ##列出所有包，或对象下的属性 类似于ls. 列出所有的内嵌模块
    ```
+3. os 偏向操作系统底层的库
+   sys 偏向python解析器的底层库
+
+### OS库
+```python
+import sys, os
+sys.platform, sys.maxsize, sys.version
+```
