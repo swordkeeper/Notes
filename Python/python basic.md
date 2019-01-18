@@ -30,6 +30,11 @@
 
    ```python
    #split()方法 可以传入分隔符，默认为空白
+   >>> line = 'aaa\nbbb\nccc\n'
+   >>> line.split('\n')
+   ['aaa','bbb','ccc','']
+   >>> line.splitlines()
+   ['aaa','bbb','ccc']
    ```
 
 4. map

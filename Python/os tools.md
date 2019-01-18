@@ -17,5 +17,5 @@ import signal, select, shutil, tempfile #多系统
 
 2. ```python
    import os, sys
-   dir(sys) ##列出所有包，或对象下的属性 类似于ls
+   dir(sys) ##列出所有包，或对象下的属性 类似于ls. 列出所有的内嵌模块
    ```
