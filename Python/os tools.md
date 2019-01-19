@@ -44,3 +44,40 @@ os.getcwd, os.chdir , os.chmod, os.getpid, os.listdir, os.access #管理工具
 os.sep, os.pathsep, os.curdir, os.path.split, os.path.join #移植工具
 os.path.exists('path'), os.path.isdir('path'), os.path.getsize('path') #路径名工具
 ```
+1. os.sep 返回不同操作系统路径分隔符，win是\，mac是:，POSIX是/           os.pathsep提供目录列表分隔符，POXIS是:，Win和DOS是;    
+因而如果需要根据不同系统分离目录可以用
+```python
+>>> import os
+>>> path = os.getcwd()
+>>> path
+'/Users/tmp'
+>>> path.split(os.sep)
+['', 'Users', 'tmp']
+>>> os.linesep  #查看系统换行符
+'\n'
+```
+2. os.path 路径工具
+```python
+os.path.isdir('path'), os.path.isfile('path')
+os.path.exists('path')
+os.path.getsize('path')
+os.path.splitext('path')   #分离扩展名
+os.path.abspath('') #显示绝对路径
+```
+3. 经典的路径分割
+```python
+>>> os.path.split('/Users/tmp/123.txt')
+('/Users/tmp', '123.txt')
+>>> os.path.join('/Users/tmp', '123.txt')
+'/Users/tmp/123.txt'
+```
+4. os.system(‘command')执行shell命令；os.popen('cat 123.txt')创建一个管道文件，用于返回执行该命令'cat 123.txt'的返回值。popen管道的一端为命令执行体，另一端为打开的这个管道对象。默认为读管道。
+5. subprocess 包
+这个包类似于os.system 和 os.popen
+```python
+import subprocess
+subprocess.call('cat 123.txt' shell = True)  # 调用shell, unix系统需要加上 shell = True
+pipe = subprocess.Popen('python helloworld.py', stdout = subprocess.PIPE)
+pipe.communicate() #返回管道读取的内容
+pipe.returncode #返回返回值
+```
