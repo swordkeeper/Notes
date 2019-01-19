@@ -22,8 +22,9 @@ import signal, select, shutil, tempfile #多系统
 3. os 偏向操作系统底层的库
    sys 偏向python解析器的底层库
 
-### OS库
+### sys库
 ```python
 import sys, os
 sys.platform, sys.maxsize, sys.version
 ```
+因而创建底层有差异的程序时，可以先测试```sys.platform```
