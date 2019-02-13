@@ -5,7 +5,7 @@
 添加```-g```参数以后，程序会变得很臃肿，因而只适用于调试阶段。
 
 ```bash
-gcc main.c -o main -g
+gcc main.c -o main.o -g
 # 对main.c进行-g参数编译，该参数用于调试
 # 生成可用于调试的main，ELF可执行程序
 ```
