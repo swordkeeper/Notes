@@ -83,7 +83,7 @@ main:=main.o
 - ```makefile
   SOURCE:=$(wildcard *.cpp)  #注意，此处*匹配所有字符串，因为该处是系统匹配，所以用*代表所有。该处匹配所有cpp文件
   # 该语句的意思就是把当前文件夹下所有.cpp文件名复制给变量SOURCE
-  OBJS:=$(patsubst %.cpp %.o $(SOURCE)) #这样就把所有文件名首部提取出
+  OBJS:=$(patsubst %.cpp, %.o, $(SOURCE)) #这样就把所有文件名首部提取出
   # 并添加上.o后缀来
   ```
 
