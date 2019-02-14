@@ -22,7 +22,7 @@ s = pd.Series([1,2,3,np.nan,6,8])
 # 建立了一个包含一列数字1, 2, 3,无穷,6,8的序列
 ```
 3. 创建一个DataFrame，即建立一个表格数据框架
-用函数np.random.rand创建DateFrame
+- 用函数np.random.rand创建DateFrame
 ```python
 dates = pd.date_range('20130101', periods=6)
 # 先建立一个时间的range，范围从20130101开始的6天
@@ -42,7 +42,7 @@ df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
 # 2013-01-05 -0.424972  0.567020  0.276232 -1.087401
 # 2013-01-06 -0.673690  0.113648 -1.478427  0.524988
 ```
-用字典创建
+- 用字典创建
 ```python
 df2 = pd.DataFrame({'A': 1.,
    ...:                     'B': pd.Timestamp('20130102'),
@@ -51,3 +51,6 @@ df2 = pd.DataFrame({'A': 1.,
    ...:                     'E': pd.Categorical(["test", "train", "test", "train"]),
    ...:                     'F': 'foo'})
 ```
+- 查看数值类型
+```python
+df.dtypes
