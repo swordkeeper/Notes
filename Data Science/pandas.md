@@ -41,10 +41,13 @@ df = pd.DataFrame(np.random.randn(6, 4), index=dates, columns=list('ABCD'))
 # 2013-01-04  0.721555 -0.706771 -1.039575  0.271860
 # 2013-01-05 -0.424972  0.567020  0.276232 -1.087401
 # 2013-01-06 -0.673690  0.113648 -1.478427  0.524988
+```
 用字典创建
+```python
 df2 = pd.DataFrame({'A': 1.,
    ...:                     'B': pd.Timestamp('20130102'),
    ...:                     'C': pd.Series(1, index=list(range(4)), dtype='float32'),
    ...:                     'D': np.array([3] * 4, dtype='int32'),
    ...:                     'E': pd.Categorical(["test", "train", "test", "train"]),
    ...:                     'F': 'foo'})
+```
