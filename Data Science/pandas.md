@@ -88,4 +88,111 @@ s = pd.Series([1,2,3,np.nan,6,8])
    #max    1.814981  0.969925  1.582474  1.320333
    ```
 
+7. df的转置
+
+   ```python
+   df.T
+   ```
+
+8. df排序
+
+   ```python
+   df.sort_index(axis=1,ascending=False)
+   # 根据索引排序，axis=1，表示根据第二纬度的索引进行降序排序 
+   df.sort_value(by = "B") 
+   # 根据列B的值进行排序
+   ```
+
+9. df索引
+
+   ```python
+   df['A']
+   # or
+   df.A
+   # 返回索引是A的列
+   ###################################################
    
+   df[0:3]
+   # df
+   df['20130202':'20130206']
+   # 返回前三行，或返回索引是'20130202'到'20130206'之间的行。
+   
+   ###################################################
+   df.loc[dates[0]] 
+   # 返回0号日期的行索引，即返回20130101该行
+   df.loc[:,['A','B']]
+   # 返回所有行，A和B列
+   ###################################################
+   
+   df.iloc[3:5,0:2]
+   # 返回行序号为3～5，列序号为0～2的元素
+   # 该方法的区别是1.关键字为 iloc，2.括号内写数字序号
+   
+   ###################################################
+   # 布尔索引
+   df.loc[df.A > 0] 
+   # loc里面 ，逗号之前都是筛选行，因而此处就是筛选行为df.A列大于零的所有行
+   
+   ```
+
+10. df拷贝和添加数据
+
+    ```python
+    df1 = df.copy()
+    # 拷贝df的数据到df1
+    df1['E'] = ['one', 'one', 'two', 'three', 'four', 'three']
+    # 添加df1一个新的列
+    
+    # isin函数
+    df2[df2['E'].isin(['two','three'])]
+    # 返回df2中列E的元素是'two'或'three'的行
+    ```
+
+11. df简单数据清洗，补全
+
+    ```python
+    df.dropna(how="any")
+    # 删除所有包含'NaN'的所有行
+    df.fillna(value = '5')
+    # 所有NaN都补为5
+    ```
+
+12. df的补全技能 shift
+
+    ```python
+    df = pd.DataFrame({'Col1': [10, 20, 15, 30, 45],'Col2': [13, 23, 18, 33, 48],'Col3': [17, 27, 22, 37, 52]})
+    # 用字典来创建包含Col1~3三列的df
+    df.shift(periods=3) # shift periods 3 表示，扩展3行（逗号前面都表示行，所以是行扩展）
+    # 结果为
+    #     Col1  Col2  Col3
+    # 0   NaN   NaN   NaN
+    # 1   NaN   NaN   NaN
+    # 2   NaN   NaN   NaN
+    # 3  10.0  13.0  17.0
+    # 4  20.0  23.0  27.0
+    # 即扩展了前三行
+    df.shift(periods=1, axis='columns') # 从列维度来扩展一个1列
+    #   Col1  Col2  Col3
+    #0   NaN  10.0  13.0
+    #1   NaN  20.0  23.0
+    #2   NaN  15.0  18.0
+    #3   NaN  30.0  33.0
+    #4   NaN  45.0  48.0
+    df.shift(periods=3, fill_value=0) # 补0
+    ```
+
+13. df基本的函数
+
+    ```python
+    df.mean() # 每列数据的均值
+    df.mean(1) # 求axis=1纬度的数据均值，即每行均值
+    ```
+
+14. df的string
+
+    ```python
+    s = pd.Series(['A', 'B', 'C', 'Aaba', 'Baca', np.nan, 'CABA', 'dog', 'cat'])
+    s.str.lower()  # 大写转小写
+    ```
+
+    
