@@ -74,7 +74,7 @@ s = pd.Series([1,2,3,np.nan,6,8])
 
 6. 快速统计
 
-7. ```python
+   ```python
    df.describe()
    # 快速的的对每一列的数据进行统计
    #              A         B         C         D
