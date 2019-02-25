@@ -20,3 +20,15 @@ np.random.rand(4,4)
 randMat = np.mat(np.random.rand(4,4))
 # 生成了一个4x4的矩阵
 ```
+- 矩阵的一些运算
+```python
+# randMat 为 matrix类型
+invRandMat = randMat.I #逆矩阵
+ret = invRandMat * randMat # 矩阵乘法
+# 相乘结果非常接近单位矩阵，因而
+zeroMat = ret - np.eye(4) #eye为单位矩阵
+# 相减之后非常接近零矩阵，因而可以用，
+np.isallclose(zeroMat, np.zeros(4)) #返回true，或者
+np.isclose(zeroMat, np.zeros(4)) # 返回true矩阵
+
+traRandMat = randMat.T #转至矩阵transpose
