@@ -17,11 +17,18 @@
 ```python
 import numpy as np
 import operator as op
+
+
 def createDataSet():   # 创建训练样本集合
     group = np.array([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]])
     labels = ['A','A','B','B']
     return group,labels
+
+
 group,labels = createDataSet() # 获取样本
+
+
+
 def classify0(inX, dataSet, labels, K):  # inX 为需要被分类的输入向量
     dataSetSize = dataSet.shape[0]
     diffMat = np.tile(inX, (dataSetSize,1)) - dataSet
@@ -39,6 +46,9 @@ def classify0(inX, dataSet, labels, K):  # inX 为需要被分类的输入向量
     # 用operator库中的itemgetter获取每个键值对元组中的第二个值，并以此值大小排列，该list
     return sortedClassCount[0][0]
     # 返回该list中的最小的一个元素的key
+
+
+
 
     classify0([0,0],group,labels,3)
     # 结果为B
