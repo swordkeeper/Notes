@@ -1,0 +1,33 @@
+# KNN (K-nearest neighbours) K临近算法
+- KNN 算法是一个离散型分类算法，属于监督学习范畴
+- 优点：算法简单易于实现，对于数据不怎么变化的问题精度高
+- 缺点：计算复杂度特别高，尤其是对于特征纬度高的数据集。
+- sdf
+- sdf
+- sdf
+- sdf
+- sdf
+- sdf
+- sdf
+- sdf
+- sdf
+- sdf
+- sdf
+
+- sdf
+- sdf
+- sdf
+- sdf
+- sdf
+- sdf
+
+- sdf
+- sdf
+- sdf
+- <div id="123">sdf<div>
+- sdf
+- sdf
+- sdf
+- sdf
+- sdf
+- sdf
