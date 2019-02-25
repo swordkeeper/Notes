@@ -7,6 +7,7 @@
 - cython
 - pypy
 - matplotlib
+- operator
 
 ### numpy
 - random
@@ -32,3 +33,7 @@ np.isallclose(zeroMat, np.zeros(4)) #返回true，或者
 np.isclose(zeroMat, np.zeros(4)) # 返回true矩阵
 
 traRandMat = randMat.T #转至矩阵transpose
+```
+```python
+# 重复数据
+np.tile([1,2,3],(2,3)) #重复数组[1,2,3]6遍，并生成一个2X3的分块数组矩阵
