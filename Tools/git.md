@@ -1,6 +1,6 @@
 # Git
 
-#### 基本命令
+### 基本命令
 
 1. 初始化空git仓库
 
@@ -36,14 +36,23 @@
      ```
 
      ```bash
+     # 撤销某次add
      git rm --cached tracked.txt # 从待命区删除已经被缓存的文件 tracked.txt
+     # 或者
+     git reset tracked.txt
      ```
 
 4. 提交变动commit
 
    ```bash
-   git commit -m "new commit" # 如果待命区staging area中的内容发生变化。则需要提交来使得变化真正被保存/序列化
+   git commit -m "new commit" -a # 如果待命区staging area中的内容发生变化。则需要提交来使得变化真正被保存/序列化
    # -m 是必加参数，用于对提交标注释
+   # -a 参数可以省略git add 步骤，直接添加并提交
+   
+   git add forgetfile.txt # 添加遗忘的文件
+   git commit --amend # 将遗忘的文件重新提交到上次的commit中。不产生新的commit。
+   
+   git commit --date 21.10.2019 # 指定提交日期，可以指定明天（未来），也可以修改时期为过去，但是该commit仍排栈顶
    ```
 
 5. 下载远程的repo到本地
@@ -53,5 +62,52 @@
    git clone https://github.com/Gazler/cloneme my_cloned_repo #下载远程repo到本地，并存于my_cloned_repo文件夹内
    ```
 
-   
+
+6. 忽略文件
+
+   ```bash
+   # 在～/.gitignore(全局) 或 ./.gitignore(local)中添加要被忽略的文件
+   .gitignore
+   *.swp    # 每行一条pattern，忽略所有.swp结尾的文件变动
+   !a.swp   # 不忽略a.swp文件
+   ```
+
+7. 暂存变化stash
+
+   ```bash
+   # 如果你想临时退出当前的变更，但又不想将现有未完成的变更提交，可以用stash命令
+   git stash # 将当前的 untracked 和 tracked 但是未commit的文件压栈。这样你就可以切换分支了
+   git stash list # 列出所有暂存的保存变更
+   git stash pop/push # 压栈或者弹栈
+   git stash apply # 应用某次记录点
+   ```
+
+8. git 移动文件
+
+   ```bash
+   # 重命名或移动
+   git mv a.txt ./src/b.txt
+   ```
+
+9. 查看git 日志
+
+   ```bash
+   git log
+   ```
+
+10. 对提交添加标签
+
+    ```bash
+    git tag new_tag # 对最新提交添加标签 new_tag
+    git push --tags # 将新标签提交到远程repo
+    ```
+
+    
+
+### Git原理
+
+#### 远程Git逻辑图
+<div>
+  <img src="./images/90e14b750d27677866b4e34e4f52fd4a.jpg" height=200>
+</div>
 
