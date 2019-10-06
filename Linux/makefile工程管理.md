@@ -60,7 +60,7 @@ main:=main.o
 	gcc main.o -o main
 # 该规则省略了如下
 # main.o:main.c
-#	gcc -c main.c
+#		gcc -c main.c
 # 即该规则缺省了上面的语句，但是makefile有一个自带的默认规则
 # 例如上面编译.o，就默认缺省了:
 # cc -c -o main.o main.c 
