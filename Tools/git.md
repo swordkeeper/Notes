@@ -16,6 +16,8 @@
    git config --global user.name "RUI"  #全局设置用户名和email  
    git config --global user.email "cmi.sss@gmail.com"   # 该方法会改变～/.gitconfig中的全局配置
    git config --local user.name "CHEN"  #只改变本repo中的信息，即.git/config 文件
+   
+   git config -e --global  # -e 参数可以直接打开编辑器来编辑对应的文件
    ```
 
    你也可以通过直接修改这两个文件``~/.gitconfig``和``./.git/config``达到同样效果
@@ -55,7 +57,13 @@
    git commit --date 21.10.2019 # 指定提交日期，可以指定明天（未来），也可以修改时期为过去，但是该commit仍排栈顶
    ```
 
-5. 下载远程的repo到本地
+5.  回复文件checkout
+
+   ```bash
+   git checkout filename # 如果filename被修改了，用checkout就把文件恢复到最近一次commit的状态
+   ```
+   
+6. 下载远程的repo到本地
 
    ```bash 
    git clone https://github.com/Gazler/cloneme #下载远程url的repo到本地，会创建cloneme文件夹（repo）
@@ -102,9 +110,22 @@
     git push --tags # 将新标签提交到远程repo
     ```
 
+11. 远程remote repo
+
+    ```bash
+    git remote show # 显示远程关联的repo名，可能有多个。 通常远端repo都叫 origin
+    git remote -v # 查看远端repo详细信息
+    
+    git pull origin master # 将远端 origin repo 拉到本地 master 分支上
+    
+    git remote add origin https://github.com/githug/githug # 添加远程repo origin 和其URL
+    ```
+
     
 
 ### Git原理
+
+Git 底层用``SHA-1``来进行校验。若是文件发生变动或者传输发生错误，文件系统的``SHA-1``值就会发生变动。``Git正是通过侦测SHA-1值的变动来检测 repo 的变动``
 
 #### 远程Git逻辑图
 <div>
