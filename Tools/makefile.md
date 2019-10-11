@@ -1,4 +1,4 @@
-# makefile工程管理工具
+# /makefile工程管理工具
 
 makefile 是自动化编译工具链常用的工具，主要用于自动化编译c，c++程序。
 
