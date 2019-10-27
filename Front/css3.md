@@ -560,7 +560,7 @@
 
    - ``translate()``平移
 
-     - ``transform:translate(x,y)``，根据现在位置进行水平和垂直方向移动 
+     - ``tranform:translate(x,y)``，根据现在位置进行水平和垂直方向移动 
 
    - ``scale()``缩放
 
@@ -762,7 +762,13 @@
      from{transform:rotateX(0deg);}		/*类似于transition，该动画从from 中的属性状态，变化到to中的属性状态*/
      to {transform:rotateX(360deg);}
    }
+   @-webkit-keyframes circle_inner{      /* 兼容写法 */
+     from{transform:rotateX(0deg);}		
+     to {transform:rotateX(360deg);}
+   }
    ```
+
+   - from / to 都是``keyframes-selector``，from表示0%，to表示100%，也可以填写别的百分比值
 
 3. ``animation-duration``属性，类似于``transition-duration``
 
@@ -808,3 +814,39 @@
 10. 综合写法
 
     - ``animation: name duration timing-function delay iteration-count direction  fill-mode play-state``，必须值为name 和 duration ， 写法对顺序没有要求，但是因为duration是必须的，所以会优先匹配duration而不是delay
+
+
+
+
+
+
+
+### 防止图片抖动
+
+1. 图片抖动的愿意主要是因为浏览器重复的不停的``渲染图片``，即刷新图片。解决办法
+
+   - Position-fixed 代替 background-attachment
+
+   - 带图片的元素放在为元素中
+
+   - 骗取3d加速 hack方法
+
+     ```css
+     translateZ() hack   /*通过添加一个z轴变化但是没有实际效果的属性功能，来骗取GPU加速3d。hack表示加速
+     ```
+
+   - 用``will-change``属性，通知计算机用``GPU``来进行加速渲染，占用内存和GPU资源
+
+     - ``will-change:auto | scroll-position | contents | <custom-ident> | <animateable-feature>;``
+
+     - Scroll-position: 表示脚药改变元素的滚动位置
+
+     - contents：表示将要改变元素的内容
+
+     - <custom-ident>：明确指定将要改变的属性与给定的名称，用的最多
+
+       ``will-change: transform``
+
+     - <animateable-feature>：课动画的特征，比如left、top、margin
+
+     - 注意：使用will-change最好用在伪类之中例如``:hover``，这样在GPU渲染结束后，这个伪类就消失了，GPU资源就释放掉了，否则会长期占用GPU资源。通常的做法是，用js动态控制它的结束
