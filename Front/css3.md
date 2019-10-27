@@ -773,3 +773,38 @@
 4. ``animation-timing-function``，类似于``transition-timing-function``
 
    - 用于给动画加时间变换形式，最好用的还是值为``linear匀速 ``和``ease-in-out 慢-快-慢``
+
+5. ``animation-delay``属性，类似于``trnsimition-delay``
+
+   - 用于定义动画延时开始，默认为0s（表示直接开始），animiation可以不填写该delay属性
+
+6. ``animation-iteration-count``，设置动画打循环次数
+
+   - ``animation-iteration-count:infinite|<number>``
+   - indinite ：无限循环次数播放
+   - <number>：填写数字，即循环n次
+
+7. ``animation-direction``，表示动画的方向
+
+   - ``animation-direction:normal | reverse | alternate | alternate-reverse |initial |inherit``
+   - normal 正常方向
+   - reverse：反方向运行
+   - alternate：先正方向，再反方向，并持续交替
+   - alternate-reverse：先返方向，再正方向
+
+8. ``animation-fill-mode``，
+
+   - 当动画播放完毕时，动画保持的样式，元素的样式
+   - ``animation-fill-mode: none| forwards |backwards | both | initial | inherit``
+   - None , 默认值，不设置动画之外的动画
+   - forwards : 设置对象状态为动画``结束``时候的状态
+   - Backwards: 设置对象状态为``动画``开始时的状态，(即回到最开始)
+   - Both : 设置对象状态为动画结束或开始的状态
+
+9. ``animation-play-state``
+
+   - ``animation-play-state:paused | running `` ， 指暂停动画  或正在运行动画（默认值）
+
+10. 综合写法
+
+    - ``animation: name duration timing-function delay iteration-count direction  fill-mode play-state``，必须值为name 和 duration ， 写法对顺序没有要求，但是因为duration是必须的，所以会优先匹配duration而不是delay
