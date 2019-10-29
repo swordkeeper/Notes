@@ -4,7 +4,7 @@ JavaScript 是一种基于``对象``和``事件驱动``的客户端脚本语言
 
 
 
-## Javascript 基础
+## Javascript 基础（ECMAScript）
 
 #### 注释
 
@@ -279,3 +279,241 @@ myfunc2("hello","wolrd","how are u");   //如上所示，则关键字  arguments
    - ``arrayObject.shift()``，删除数组第一个元素，并返回该值
 
    - ``arrayObject.pop()``，删除数组最后一个元素，并返回该值
+
+   - ``arrayObject.join(separator)``用于把数组所有元素放入一个字符串并返回，需要填写一个分割标志
+
+     ```javascript
+     list = [1,2,3,4,5];
+     var str = list.join(","); //str为  "1,2,3,4,5"  字符串
+     ```
+
+   - ``arrayObject.reverse()``，倒序，直接将数组倒序，而不是返回一个倒序引用
+
+   - ``arrayObject.sort(sortby)``，sort方法里面需要传递一个sortby参数，``默认的sort会将数组中所有元素转换成字符串，然后在比较字符串``
+
+     ```javascript
+     var list = [4,1,5,7,81,22,9];
+     console.log(list.sort()) //再不写sortby比较函数时，默认会将list中元素转换成字符串比较，结果[1,22,4,5,7,81,9]
+     //可以写一个匿名比较函数，如下：
+     console.log(list.sort(
+     	  function(x,y){
+           return x-y;
+         }
+     ))
+     ```
+
+   - ``arrayObject.concat(arrayX, arrayY,....)``，链接多个数组，返回拼接之后的值
+
+   - ``arrayObject.slice(start,end)``，返回数组中的默片段的index，start的必填，end可选，包含start，不包含end位置，start可以为负数。
+
+   - ``arrayObject.splice()``方法，删除，插入，替换都可以实现，
+
+     - ``arrayObject.splice(index, count)``，删除操作，删除从index开始的count个元素，并返回删除的数组，若count不填，则删除从index开始的所有
+
+       ```javascript
+       // 删除操作  arrayObject.splice(index, count)
+       var arr=["a","b","c","d","e"];
+       var delArr=arr.splice(2,2)   //从2开始删除2个，则原来剩下["a","b","e","f"]，返回["c","d"];
+       ```
+
+     - ``arrayObject.splice(index,0,item1,item2....)``，插入操作，count为0，表示不删除，后面添加的item项表示添加的内容，到index位置。
+
+       ```javascript
+       var arr=["a","b","c","d","e"];
+       var delArr=arr.splice(3,0,"m","n")   // 在index=3的位置插入"m",和“n”，不删除则count=0
+       ```
+
+     - ````arrayObject.splice(index,2,item1,item2....)``，替换，同插入，只是count不再是0
+
+       ```javascript
+       var arr=["a","b","c","d","e"];
+       var delArr=arr.splice(1,2,"x","y","z")   // 删掉index=1后的两个，再在这个位置插入xyz，则实现了替换
+       ```
+
+   - ``arrayObject.indexOf(searchvalue, statIndex)``，查找searchvalue，从startIndex开始，searchIndex必填，startIndex选填。找到返回index，未找到返回-1
+
+2. ``String``字符串
+
+   - ``stringObject.charAt(index)``和``stringObject.charCodeAt(index)``，一个返回字符，一个返回编码本身。老版本的浏览器不兼容使用``[]``进行索引字符串元素，所以为支持低版本的浏览器，就应该用该两种方法
+
+     ```javascript
+     var str="hello World";
+     console.log(str[1]); //返回 e
+     console.log(str.charAt(0))  //返回h
+     console.log(str.charAt(100))  //返回一个空 ''
+     console.log(str.charCodeAt(1))   //返回e的编码 111
+     ```
+
+   - ``stringObject.indexOf("o")``和``stringObject.lastIndexOf("o")``，返回一个子串的位置，找到返回index，未找到返回-1。
+
+   - ``stringObject.slice(start,end)``和``stringObject.substring()``和``stringObejct.substr()``，截取子串
+
+     - ``stringObject.slice(start,end)``，截取子串的开始位置start（必填），到end位置（不包括、选填），可以为负数
+
+     - ``stringObject.substring(start,end)``，同理slice，只是不能为负数，substring会将负数转换成0。而且会将较小的数字作为较小的位置
+
+       ```javascript
+       var str="hello World";
+       console.log(str.substring(5,-2))  //-2会被转换成0，然后0比5小，因而会取[0~5)截取
+       ```
+
+     - ``stringObject.substr(start, len)``，截取start开始的len个字符，start可以为负数
+
+   - ``stringObject.split(separator)``，将字符串用separator分割成一个数组 
+
+   - ``stringObject.replace(regex/substr,replacement)``，替换一个字符串，第一个参数可以是一个子串，也可以是正则式，第二个参数是要替换的内容，``该方法不会修改原字符串，而只是返回一个新的字符串``，若不写正则式，则``只替换一次``
+
+   - ``string.Object.toUpperCase()``和``string.Object.toLowerCase()``大小写转化，不修改原字符串 
+
+3. ``Math``对象
+
+   - ``min(num1,num2...)``，``max(num1,num2...)``
+
+     ```javascript
+     var min = Math.min(5,-2,0,102,44);  //返回这几个数字的最小值
+     var min2 =  Math.min(5,-2,0,102,44,"abc");  //如果出现一个非数字，则会返回NaN
+     ```
+
+   - ``ceil(num)``，向上取整，即大于该数字的整数，``floor(num)``，只返回整数部分，``round(num)``四舍五入
+
+   - ``abs()``
+
+   - ``random()``方法随机生成[0~1)的随机数
+
+     ```javascript
+     var rd = Math.random();
+     ```
+
+      
+
+4. ``Date``对象
+
+   - 创建``date = new Date()``不传参数，返回当前时间的对象
+
+     ```javascript
+     var today = new Date();
+     console.log(today);  //返回当前时间
+     ```
+
+   - 具体方法
+
+     - ``getFullYear()``，返回四位数年
+
+     - ``getMonth()``，返回0～11
+
+     - ``getDate()``，返回月份中的某一天
+
+     - ``getDay()``，返回0～6
+
+     - ``getHours()``，返回小时
+
+     - ``getMinutes()``，返回分钟数
+
+     - ``getSeconds()``，返回秒
+
+     - ``getTime()``，返回表示日期的毫秒
+
+     - 同理都有``set``方法，如``setFullYear(year)``，``setSeconds(sec)``，这些set选项如果设置的超过了最大值，则上一个单位一会进位。例如
+
+       ```javascript
+       var date = new Date() ; //拿到 2019.10.10
+       date.setMonth(48);
+       console.log(date)  //会显示 2023年1月10日。因为加48个月会除以12个月，为4，然后余0，因而就是加4年，然后0月
+        //同理其他操作
+       ```
+
+       
+
+#### JavaScript 错误/调试
+
+##### JavaScript错误类型
+
+1. ``SyntaxError``，语法错误
+
+   ```javascript
+   var 1a;  //错误，不能以数字开头定义变量名称
+   ```
+
+2. ``Uncaught ReferenceError``，引用错误
+
+   ```javascript
+   a()
+   console.log(b)   //引用了不存在的对象
+   ```
+
+3. ``RangeError``，范围错误
+
+   ```javascript
+   [].length= - 5; // 长度不能设置为负数
+   function f(){   // 无限递归
+     f(); 
+   }
+   ```
+
+4. ``TypeError``，类型错误
+
+   ```javascript
+   123()  //整数类型的，被当成函数
+   ```
+
+5. ``URIError``，URL错误
+
+   ```javascript
+   decodeURI("%");
+   ```
+
+6. ``EvalError``，eval()执行错误
+
+##### JavaScript 调试
+
+1. 添加``debugger``
+
+   ```javascript
+   var a =5;
+   debugger;    // 添加debugger关键字，则程序在运行到此处时，就会在控制台停下来
+   document.write(a);
+   
+   ```
+
+2. ``throw``，主动抛出一个错误
+
+   ```javascript
+   var input_A = prompt("输入一个数字");
+   var input_B = prompt("输入另一个数字");
+   var parse_A = parseInt(input_A);   //将其解析成一整数
+   var parse_B = parseInt(input_B);
+   if(parse_A!=parse_A){   //如果解析不成功则返回NaN，而NaN是不等于任何值的
+      throw new Error("argument should be an integer");   
+     //一旦throw一个错误，该程序就结束了，后面任何程序都不会继续进行
+     //而该错误会一致向外层函数传递，直到遇到一个  try语句。
+   }
+   ```
+
+   ``try catch``，主动接受一个错误
+
+   ```javascript
+   try{
+    // ..... 语句 ，如果此处遇到throw语句执行（如上的  parse_A!=parseA  的情况），
+     // 则try会吧这个抛出的错误投递给catch进行执行，try后续的语句就不在执行了。
+   }catch(e){
+    // ....  执行错误接收到后的处理函数，处理完毕后继续执行 try/catch 快后面的代码
+     // e 变量会接收到该错误对象
+   }finally{
+     // .. 无论执行try还是catch ，最终finally部分一定会执行
+   }
+   ```
+
+   
+
+## JavaScript DOM
+
+DOM（Document Object Model 文档对象），提供了JavaScript一种操作HTML、XML文档的接口
+
+1. ``查找``DOM元素
+
+   ```javascript
+   document.getElementById("id");    // 通过id查找一个html元素，返回该元素对象的引用，只返回第一个id的引用
+   document.getElementsByTagName("li");   // 通过标签查找一组元素，返回该元素对象的引用
+   ```
+
+   
