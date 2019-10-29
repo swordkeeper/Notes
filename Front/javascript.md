@@ -516,4 +516,67 @@ DOM（Document Object Model 文档对象），提供了JavaScript一种操作HTM
    document.getElementsByTagName("li");   // 通过标签查找一组元素，返回该元素对象的引用
    ```
 
-   
+2. ``设置样式``
+
+   - ``element.style.styleName=styleValue; `` ，设置element元素的样式， 如果有样式是用`` -``  链接起来的，例如 ``font-size``，这样在此不能用`` -`` ，必须改写成为  ``fontSize ``驼峰形式。
+
+     ```javascript
+     var chr = document.getElementById("h3_char");
+     chr.style.color="#fee";
+     chr.style.fontSize="50px";
+     ```
+
+   ``设置内容``
+
+   - ``element.innerHTML``，用于设置 HTML 标签中的内容，如果该标签中还有别的标签，例如``<div><b>hello</b></div>``，则会连内部的b标签页显示
+
+     ```javascript
+     var div_c = document.getElementById("div_c");
+     div_c.innerHTML="HELLO, THIS IS YOUR CONTENT"; 
+     ```
+
+   ``设置类``
+
+   - ``element.className``，获取元素的类
+
+     ```javascript
+     var chr = document.getElementById("h3_char");
+     chr.className+=" new_class";  // += 符号保证了是添加一个类，若是直接等号，则替换了原来的类。
+     ```
+
+   ``设置属性``
+
+   - ``element.getAttribute("attribute")``，获取一个属性
+
+     ```javascript
+      //. <input type="text" id="input"/>  该标签有属性 type 和 id， style只是一个标签的一个属性而已
+     var chr = document.getElementById("input");
+     chr.getAttribute("type");   //可以以这种方式获得input标签的type属性，也可以如下
+     chr.type     //该方式也可以获得input标签的type属性，但是该种方法不能获得 class类属性，因为class有点标记。而且该方法只能用于 ``标签自带的属性``， 用户定义的属性无效。
+     ```
+
+   - ``element.setAttribute("attribute","value")``，同理将某个属性设置成某些值，该方法也可以用于添加一个自定义属性。
+
+   - ``element.removeAttribute("attribute")``，删除某个属性
+
+
+
+#### HTML事件
+
+- ``<tag 事件=“执行脚本> </tag>``，HTML事件就是写在HTML标签内部的事件，与HTML元素绑定。
+
+  1. 鼠标事件：
+
+     - ``onload``，页面加载时触发
+     - ``onclick``，点击时触发
+     - ``onmouseover``，鼠标滑过时触发
+     - ``onmouseout``，鼠标离开时触发
+     - ``onfocus``，获得焦点时触发
+     - ``onblur``，失去焦点时触发
+     - ``onchange``，域内容发生改变时触发
+
+     ```html
+     <input type="button" value="弹出" onclick="alert("我是按钮")" />
+     ```
+
+     
