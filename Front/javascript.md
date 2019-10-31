@@ -567,16 +567,109 @@ DOM（Document Object Model 文档对象），提供了JavaScript一种操作HTM
 
   1. 鼠标事件：
 
-     - ``onload``，页面加载时触发
+     - ``onload``，页面加载完毕时立即触发
+
+       ```javascript
+       window.onload=function(){}
+       ```
+
      - ``onclick``，点击时触发
+
+       ```html
+       <input type="button" value="弹出" onclick="alert("我是按钮")" />
+       ```
+
      - ``onmouseover``，鼠标滑过时触发
+
      - ``onmouseout``，鼠标离开时触发
-     - ``onfocus``，获得焦点时触发
-     - ``onblur``，失去焦点时触发
+
+     - ``onmousemove``，鼠标在按钮上移动时触发
+
+     - ``onmousedown``，鼠标按下
+
+     - ``onmouseup``，鼠标松开 
+
+     - ``onfocus``，获得焦点时触发 ，用于表单
+
+     - ``onblur``，失去焦点时触发，用于表单
+
+     - ``onsubmit``，当表单确认提交按钮被执行时触发，用在``<form>``标签上
+
      - ``onchange``，域内容发生改变时触发
 
-     ```html
-     <input type="button" value="弹出" onclick="alert("我是按钮")" />
+       ```javascript
+       function init(){
+         var menu = document.getElementById("menu");
+         menu.onchange=function(){ // menu 是一个多选框，即<select>，如果用户选择或改变了多选框中的内容，该事件触发
+           var bgcolor=this.value;
+           var bgcolor=this.options[menu.selectedIndex].value; 
+         }  
+       }
+       ```
+
+     - ``onresize``，窗口大小重新调整
+
+     - ``onscroll``，拖动滚轮
+
+     - ``onkeydown``，键盘按键被按下时发生
+
+     - ``onkeypress``，键盘按键按下时发生，区别在于，该方法只监控``字符，数字，符号``，不监控特殊控制符号，包括上、下等 。而且，该事件会先出发事件，再打印字符，这时文本框中的数据还没发生改变；而onkeydown则是先打印字符再触发事件。
+
+     - ``onkeyup``，键盘按键松开时发生
+
+     - ``keyCode``，返回键盘事件的按键值
+
+     ```javascript
+     document.onkeydown=function(event){   //document 文本域监控键盘按键，按键则触发该function，而且自带一个
+       console.log(event.keyCode)          //event变量。可以通过keyCode来的到按键值
+     }
      ```
 
-     
+     在触发事件时，``this``是对DOM元素的引用
+
+     ```html
+     <body>
+       <input type="button" value="变色" mouseover="mouseover(this)" /> <!--鼠标滑过变色，添加了this-->
+       <script>
+         	function mouseover(this){
+             this.style.background="red";   //this对象就作为该事件触发的DOM的对象
+           }
+       </script>
+     </body>
+     ```
+
+#### DOM0事件
+
+即先通过``docuement``查找到元素，在写入到对象内部的事件，而不通过HTML页面
+
+- ``ele.事件=执行脚本``
+
+  ```javascript
+  var btn = document.getElementById("btn");
+  btn.onclick=function(){    //执行脚本为匿名类   
+    console.log(this); 			 //打印本对象
+  }    // 以上是匿名事件的写法
+  function btn_click(){
+    console.log(this);  //这种方式默认传递this参数
+  }
+  btn.onclick=btn_click;   //如果有名类，传递给onclick时候，不能添加括号
+  ```
+
+
+
+
+
+## Javascript BOM
+
+BOM（browser object model）浏览器模型，用于提供浏览器的一些功能
+
+1. ``window``，浏览器的实例对象，是所有``全局变量和全局函数``的根。
+
+   ```html
+   <script>
+     var age =15;  // 定义了一个全局变量，等价于定义window对象的一个属性，是全局变量，如下：
+     window.age=15;  
+   </script>
+   ```
+
+   
