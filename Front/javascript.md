@@ -672,4 +672,62 @@ BOM（browser object model）浏览器模型，用于提供浏览器的一些功
    </script>
    ```
 
-   
+   - ``confirm``方法，用于生成一个确认的弹出框
+
+     ```javascript
+     var result = window.confirm("您是否确定删除")  // 点击确定返回true
+     ```
+
+   - ``open``方法，``window.open(pageURL,name,parameters)``，打开一个新的浏览器窗口，或者查找一个以命名的窗口。其中name为子窗口句柄（即新窗口的名称，方便引用）
+
+     ```javascript
+     window.onload=function(){
+       window.open("new.html","new_page_name","width=400,height=200,left=0,top=0,toolbar=no,menubar=no,scrollbars=no,location=no,status=no");
+       //设置了在本页面加载完毕后瞬间打开一个新的页面，名称变量为new_page_name，并设置一些新页面的属性。
+     }
+     ```
+
+   - ``close``方法，关闭一个窗口，返回一个调用ID
+
+2. ``setTimeout(code,millisec)``，在指定毫秒数后执行代码code。``clearTimeout(timeoutId)``取消某个计时器
+
+   ```javascript
+   window.setTimeout("alert('HELLO')",1000)  //1s之后执行代码code，即alert("hello")
+   var timeoutID = setTimeout(function(){   //推荐用这种方法
+     alert("hello");
+   },1000)
+   window.clearTimeout(timeoutID) ; // 取消执行setTimeout所设置的函数
+   ```
+
+3. ``setInterval(code,millisec)``，同理，每隔指定时间执行一次指定代码code。该方法也会返回一个Id，``clearInterval(id)``，同理清除。
+
+4. ``location``对象，提供与当前窗口加载有关的一些信息
+
+   - ``location.href``，返回当前加载页面的完整URL
+
+     ```javascript
+     console.log(location.href);
+     ```
+
+   - ``location.hash``，URL的锚位置
+
+   - ``location.host``，主机地址+端口号
+
+   - ``location.hostname``，主机地址
+
+   - ``location.port``，端口号
+
+   - ``location.pathname``，返回的是目录path
+
+   - ``location.protocol``，网络协议
+
+   - ``location.search``，返回URL查询字符串。这个字符串以``?``开头，例如
+
+     ```javascript
+     // url =. https:www.baidu.com:8080/a/dir/im?id=55&username=hello
+     location.search //返回id=55&username=hello
+     ```
+
+   - ``locartion.replace(url)``，也是重新定向网页的，区别于href在于，他不会产生历史记录，即回退按钮失效。
+
+   - ``reload()``，重新加载当前页面
