@@ -655,9 +655,32 @@ DOM（Document Object Model 文档对象），提供了JavaScript一种操作HTM
   btn.onclick=btn_click;   //如果有名类，传递给onclick时候，不能添加括号
   ```
 
+#### DOM 节点
 
+- ``document.createTextNode()``，创建文本节点
 
+- ``document.createElement()``，创建标签节点，重点
 
+  ```html
+  <body>
+    <ul id="myList" ></ul>
+    <script>
+      var ul = document.getElementById("myList");
+      var li = document.createElement("li");    //创建标签节点
+      var text = document.createTextNode("Item");
+      ul.appendChild(li);     //添加到ul标签中
+      li.appendChild(text);   // 创建带文本的节点，并添加到li下
+    </script>
+  </body>
+  ```
+
+  
+
+- ``document.createComment()``，创建注释节点
+
+- ``document.createDocumentFragment()``，创建片段，主要用于分段整合节点树
+
+  
 
 ## Javascript BOM
 
@@ -730,4 +753,50 @@ BOM（browser object model）浏览器模型，用于提供浏览器的一些功
 
    - ``locartion.replace(url)``，也是重新定向网页的，区别于href在于，他不会产生历史记录，即回退按钮失效。
 
-   - ``reload()``，重新加载当前页面
+   - ``location.reload()``，重新加载当前页面，括号内提填写true，表示从服务器加载，否则可能会从本地缓存加载。 
+
+5. ``history``，用户浏览记录。
+
+   - ``history.back()``，该方法返回历史记录的上一步，即重写回退按钮的功能，可以指向别的url，而不是上一个浏览的页面。等价于``history.go(-1)``，返回上一个页面
+   - ``history.forward()``，该方法跳转页面到下一步（表明他是以退回的页面），等价于``history.go(1)``
+   - ``history.go(n)``，跳转页面到历史的记录。 
+
+6. ``screen``对象，表示浏览器对象
+
+   - ``screen.availWidth``，屏幕可用宽度（包括一切边栏等），``window.innerWidth``（窗口宽度）（不包括打开的边栏，例如打开chrome调试工具所占的空间)
+   - ``screen.availHeight``，屏幕 可用高度，``window.innerHeight``（窗口高度）。 
+
+7. ``navigator``，导航
+
+   - ``navigator.userAgent``，属性用来识别浏览器名称、版本、引擎、操作系统信息
+
+   
+
+
+
+### 其他
+
+1. 自封装，不污染整个环境
+
+   ```javascript
+   (function(){
+     //函数体积
+   })()   // 该定义的函数值本作用域内有效，不污染整个作用域空间
+   // ()包括整个匿名函数的定义，匿名函数的定义返回一个函数的引用，然后后面紧接着一个()表示调用。
+   ```
+
+2. ie hack 条件编译
+
+   ```javascript
+   // IE 浏览器的条件编译，以 /*@cc_on  开始，以  @*/  结束，中间的部分，如果是IE浏览器就被执行，如果是其他浏览器就被跳过。例如：
+   function(){   //经典写法
+     if(!
+        /*@cc_on!@*/     
+       0) return;      //该if语句中间包含了一句IE条件编译语句（即只有IE能识别执行），这条语句在开始符号和结束符号之间
+     						//只有一个  ！ 号（非号），然后结合外面的 !0，则非IE浏览器就等于!0，即直接返回return，
+     						//后面的代码就被跳过。若是IE则被解析成 !!0，即if不成立，后面的语句其他功能就被执行了
+     // 其他功能代码
+   }
+   ```
+
+   
