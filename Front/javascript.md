@@ -669,7 +669,7 @@ DOM（Document Object Model 文档对象），提供了JavaScript一种操作HTM
       var li = document.createElement("li");    //创建标签节点
       var text = document.createTextNode("Item");
       ul.appendChild(li);     //添加到ul标签中
-      li.appendChild(text);   // 创建带文本的节点，并添加到li下
+      li.appendChild(text);   // 创建带 文本的节点，并添加到li下
     </script>
   </body>
   ```
@@ -679,6 +679,10 @@ DOM（Document Object Model 文档对象），提供了JavaScript一种操作HTM
 - ``document.createComment()``，创建注释节点
 
 - ``document.createDocumentFragment()``，创建片段，主要用于分段整合节点树
+
+- ``document.getElementsByName("name")``，获得所有``name``属性为指定值的对象集合
+
+- ``getElementsByTagName()``，返回所有标签名为指定值的所有元素。较为常用
 
   
 
@@ -799,4 +803,12 @@ BOM（browser object model）浏览器模型，用于提供浏览器的一些功
    }
    ```
 
+   ```javascript
+   if(!+"\v1"){
+      // IE 浏览器 不会转义 \v   解析结果为 "v1"， 自动类型转换为NaN
+      // 其他浏览器，默认转义 \v 为一个垂直的制表符（类似于空格） 解析结果为 " 1"  自动类型转换为1
+   }
+   ```
    
+   
+
