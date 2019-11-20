@@ -682,9 +682,140 @@ DOM（Document Object Model 文档对象），提供了JavaScript一种操作HTM
 
 - ``document.getElementsByName("name")``，获得所有``name``属性为指定值的对象集合
 
-- ``getElementsByTagName()``，返回所有标签名为指定值的所有元素。较为常用
+- ``document.getElementsByTagName()``，返回所有标签名为指定值的所有元素。较为常用
 
+  ```javascript
+  var inputs = document.getElementsByTagName("input");
+  console.log(inputs[0].value); //输出input的值
+  var comment = document.getElementsByTagName("!");  //获取所有的注释对象
+  console.log(comment[0].nodeValue);      //输出comment的节点内容
+  ```
   
+- ``getElementsByClassName()``，根据类名查找
+
+- ``querySelector()``，返回文档中匹配的指定CSS选择器的一个元素
+
+  ```javascript
+  var myDiv = document.getElementById("myDiv");
+  var ul = myDiv.querySelector("#myUL");   // CSS格式的ID，即#myUL
+  var li = myDiv.querySelector("li:last-child");
+  ```
+
+- ``querySelectorAll()``，返回文档中匹配的指定CSS选择器的一组元素
+
+#### 操作节点的方法
+
+- ``appendChild()``，为nodeList列表尾部添加一个新的节点，返回新增的节点/
+
+- ``insertBefore()``，指定子节点之前插入一个新的节点 
+
+- ``replaceChild()``，替换某个节点
+
+- ``cloneNode()``，克隆一个节点，返回该节点的副本。接收一个参数，可以为true（默认为false），当为false时，只复制节点本身，不复制该节点的子节点。
+
+- ``normalize()``，合并相邻的Text节点
+
+  ```javascript
+  var div = document.createElement("div");
+  var text1 = document.createTextNode("text1");
+  var text2 = document.createTextNode("text2");
+  div.appendChild(text1);
+  div.appendChild(text2);
+  console.log(div.childNodes.length); // 返回 2
+  div.normalize();   // 将一个节点中的文本节点合并
+  console.log(div.childNodes.length); // 返回 1
+  console.log(div.firstChild.nodeValue) // 返回合并后的文本值
+  ```
+
+- ``splitText()``，与normalize正好相反，传入一个整数参数，参数之前的所有文本内容作为一个旧的节点值，参数返回一个新的节点（参数后所有的文本内容）。
+
+- ``removeChild()``  ，删除某个节点下的子节点，返回删除的节点。传入参数为要删除的节点
+
+- ``removeNode()``，IE私有方法，删除目标节点，参数为布尔值，默认为false
+
+- ``innerHTML``
+
+- ``deleteContents()``
+
+- ``textContent``
+
+#### HTML属性的Js操作
+
+HTML属性分为：固有属性``property``和自定义属性``attribute``，所有的都被称为属性。
+
+- 固有属性可以通过``.``访问。例如，``div.id``，自定义属性不可以通过``.``访问
+
+- 返回所有属性``namedNodeMap``集合，``div.attributes``。也可以通过该集合拿到具体某个属性的值``div.attributes.getNamedItem("xxx").nodeValue``，该方法只能用于在标签属性区域显示定义了的方法。
+
+- 删除属性``div.attributes.removeNamedItem("yyy")``
+
+- 添加一个属性，需要传递属性对象，而不是字符串
+
+  ```javascript
+  var attr= document.createAttribute("data-title");
+  attr.value="ddd";  //创建属性对象并赋值
+  div.attributes.setNamedItem(attr);
+  ```
+
+- ``getAttribute()`` ，获得一个自定义或者固有属性的值。注意：对于``onclick``和``style``属性，用``getAttribute()``和``.``方法访问是有区别的，``.``一般返回对象，或函数。``getAttribute``一般返回值内容。
+
+- ``setAttribute()``，设置一个属性的值 。第一个参数为属性名称，第二个参数为属性值
+
+- ``removeAttribute()``，移除某一个属性。
+
+##### 常见字符串属性
+
+1. id
+2. title
+3. href
+4. src
+5. Lang ，表示浏览器解析时候的语言
+6. dir ，文字方向，值为"RTL"，"LTR" 左到右
+7. accesskey ，快捷键
+8. name 
+9. value , 表单值
+10. Class
+
+##### 全局属性
+
+　1. accesskey
+ 　2. class
+ 　3. contenteditable ，表示内容是否可以编辑，一般与spellcheck属性 组合使用
+ 　4. dir
+ 　5. hidden
+ 　6. id
+ 　7. lang
+ 　8. spellcheck
+ 　9. style
+ 　10. tabindex ，定义tab见进行导航时的顺序
+ 　11. title
+ 　12. Translate
+
+##### data属性
+
+存储页面或程序的私有数据，用于配置信息。通常以``data-``开头
+
+```html
+ <button id="btn" data-xxx-yyy="abc" data-toggle="modal"> small modal </button>
+<script>
+	console.log(btn.dataset.toggle);   //可以直接访问toggle自定义的数据
+  console.log(btn.dataset.xxxYyy);   //多个分隔符分开的需要用驼峰形式 
+</script>
+```
+
+##### class属性
+
+```javascript
+function(ele,cls){
+  ele.classList.add(cls);   // classList 返回class对象，并调用add方法，就把cls添加到ele的类中了
+  ele.classList.remove(cls);
+  ele.classList.contains(cls);    //判断存在与否某个类
+  ele.classListtoggle(ele,cls);       //如果存在，则删除，否则添加
+}
+
+```
+
+
 
 ## Javascript BOM
 
@@ -775,6 +906,8 @@ BOM（browser object model）浏览器模型，用于提供浏览器的一些功
    - ``navigator.userAgent``，属性用来识别浏览器名称、版本、引擎、操作系统信息
 
    
+
+#### JavaScript 事件
 
 
 
