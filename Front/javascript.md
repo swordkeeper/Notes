@@ -909,7 +909,110 @@ BOM（browser object model）浏览器模型，用于提供浏览器的一些功
 
 #### JavaScript 事件
 
+``事件``是指浏览器上内容发生的变化，包括点击鼠标、移动鼠标、键盘键入以及页面加载等。 
 
+``事件句柄``，事件句柄是用来接收可能发生的某一个事件，即``事件处理函数``。
+
+绑定事件
+
+```javascript
+var btn = document.getElementById("btn");
+btn.addEventListener('click',function(){    //添加事件监听器，即事件句柄。此处监听按键被点击事件
+  // 事件处理函数
+})
+```
+
+1. ``事件定义``
+
+   - 在HTML元素中定义
+
+     ```html
+     <button onclick="alert('hello')" onload="alert('lalala')">按钮</button>
+     <!-- 该方法可以实现效果但是，违反了行为与内容分离原则-->
+     ```
+
+   - DOM0 级事件定义方式，即从javascript中为``dom元素的属性赋值``，该方式只能绑定一个处理函数
+
+     ```javascript
+     document.getElementById("btn").onclick=function(){//.....}
+     ```
+
+   - DOM2 级事件定义方式，他是高级事件处理方式，一个事件可以绑定多个处理函数，多个事件处理函数并存执行。
+
+     ```javascript
+     var btn = document.getElementById("btn");
+     btn.addEventListener("click",function(){},true)  
+     // 有三个参数，第一个为要监听的事件，第二个为处理函数，第三个参数
+     ```
+
+2. ``事件移除``
+
+   - DOM2 级事件移除方式
+
+     ```javascript
+     btn.removeEventListener("click",functionName, false); 
+     ```
+
+3. ``IE事件流``，用于IE8级一下的浏览器
+
+   - ``attachEvent(event,function)``，IE的事件添加，类似于addEventListener
+
+      ```javascript
+     btn.attachEvent("onclick",function(){
+       alert("IE8, click");
+     });
+      ```
+
+   - ``detachEvent(event,function)``，移除事件
+
+4. ``事件冒泡和事件捕获``
+
+   - 事件捕获：从外向内传播。即一个事件同时满足父子事件触发的条件，父节点先执行处理函数。
+
+   - 事件冒泡：从内向外传播。同理，子节点先执行处理函数。
+
+   - 事件委托：
+
+     ```html
+     <ul id="ul">
+       <li id="1"></li>
+       <li id="2"></li>
+       <li id="3"></li>
+       <li id="4"></li>
+     </ul>
+     ```
+
+     ```javascript
+     var ul = document.getElementById("ul")
+     ul.addEventListener("click",function(event){
+       	alert(event.target.id);  
+       //点击一个li，会弹出相应的id。事件委托的意思就是，将事件托付给其父节点设置，利用了冒泡机制
+     },false);
+     ```
+
+5. ``event 对象常用属性和方法``，event必须通过``function(event){}``传入
+
+   - event.type ：事件类型
+   - event.target：事件触发的目标，可以为孩子节点上发生的事件，根据冒泡原理，在父节点出被截获
+   - event.currentTarget：事件绑定的位置，即返回绑定处理函数的对象（该事件被触发）
+   - event.preventDefault() ：该函数阻止系统自带的行为函数的执行，例如``<a>标签``的点击事件的默认跳转行为会被阻止。
+   - event.stopPropagation()：该函数阻止事件继续传播。即阻断冒泡传播。
+   -  event.clientY, event.pageY, event.screenY：分别代表，浏览器顶端到鼠标点击位置的距离，页面顶到鼠标位置，屏幕到该位置。 clientY，永远指浏览器到位置，pageY的位置可能会根据浏览器滚动轴的变化而变化
+
+   
+
+6. ``IE8以下的浏览器event方法``
+
+   - event.type : 事件类型
+   - event.returnValue = false  ：等价于preventDefault()，阻止默认行为。
+   - event.cancelBubble = true;  ：等价于stopPropagation()，阻止事件继续派发
+   - event.srcElement  ：等同于target，返回事件触发源
+
+7. ``事件类型``
+
+   - 
+
+   
 
 ### 其他
 
