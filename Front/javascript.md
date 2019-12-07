@@ -1085,7 +1085,7 @@ btn.addEventListener('click',function(){    //添加事件监听器，即事件�
 
    - ``DOMNodeInsetedFromDocument``，对象中有元素添加触发
 
-   - ``DOMNodeRemovedFromDocument``，对象中元素被删除之前触发
+   - ``DOMNodeRemovedFromDocument``，对象中元素被删 除之前触发
 
    - ``DOMSubtreeModified``，表示对象中的结构发生任何变化时触发
 
