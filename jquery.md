@@ -172,7 +172,7 @@
       	 var python = allDIV.filter(".python");  //从已有的集合中过滤出 包含.python类的 子元素
     });
     
-    // filter( expr | obj | element | fn )
+    // filter( expr | obj | element | fn ) 
     ```
 
     
