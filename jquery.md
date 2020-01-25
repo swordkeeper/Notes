@@ -125,8 +125,54 @@
      // 同理还有
      // :password   :radio  : checkbox  :image    : reset  :button  :file
      
-     // 表单元素还有  :enable 和 :disable 属性
+     // 表单元素还有  :enable 和 :disable ， :checked  :selected
    })
    ```
 
-   
+10. 查找和过滤
+
+    ```html
+    <aside>
+    	<details>
+          <details></details>
+          <details></details>
+      </details>
+      <details></details>
+    </aside>
+    ```
+
+    
+
+    选择元素
+
+    ```javascript
+    // find(expr | obj | element)   查找某一个元素
+    
+    $(document).ready(function(){
+      	var details = $("aside").find("details"); // 在aside下面的所有details标签都被找到
+         var details1 = $("aside").children("details"); //只找到aside标签的直接后继details标签
+    	  var asides =  $("details").parent();  // 找到直接父节点
+      
+      	var nex = details.next(); // 找到本元素的后一个元素 , 即下一个兄弟
+         details.prev();   // 即上一个兄弟
+      
+      
+       // eq（index|-index） 可以为负数
+       details.eq(2); // 从选中的 details 元素列表中选出第二个返回 
+      details.siblings() // 找到同层的所有其他元素
+    });
+    
+    ```
+
+11. filter 选择器
+
+    ```javascript
+    $("document").ready(function(){
+      	 var allDIV = $("div");
+      	 var python = allDIV.filter(".python");  //从已有的集合中过滤出 包含.python类的 子元素
+    });
+    
+    // filter( expr | obj | element | fn )
+    ```
+
+    
