@@ -176,3 +176,119 @@
     ```
 
     
+
+## 事件
+
+1. 鼠标事件
+
+    ```javascript
+   // click([data,function]) 单击事件
+   $("a").clcik(function(){
+     console.log($(this))   //返回单机的对象
+   })
+   // dblclick([data,function])  双击事件
+   
+   // mousedown 、 mouseup ，鼠标按下和松开事件
+    ```
+
+   - `` click`` 单机事件
+   - ``dblclick`` 双击事件
+   - ``mousedown``鼠标按下
+   - ``mouseup``  鼠标松开
+   - ``mouseenter``  鼠标进入
+   - ``mouseleave``  鼠标松开
+   - ``mouseover``，``mouseout``，鼠标进入和退出***本元素或者其子元素时候触发***
+   - ``hover`` 鼠标接触，即等价于mouseenter+mouseleave。``hover(function1,function2) 可接受两个函数，分别达标进入和退出时的两种效果``
+   - ``mousemove([data], function)``，鼠标移动事件
+   - ``scroll([data], function)``，返回滚轮事件，即当滚动条发生变化时，触发
+
+2. 键盘事件
+
+   - ``keydown([data],function)``，当键盘或者按钮被按下时候触发。
+
+     ```javascript
+     $("div").keydown(function(event){   //当事件发生时候会自动生成一个event对象，用来记录事件本身信息
+       console.log(event.key); //返回被按下的key
+       console.log(event.keycode) ; // 返回被按下的key的ASCII编码
+     })
+     ```
+
+   - ``keyup([data],function)``，当按键松开时触发
+
+   - ``keypress([data],function)``，当按键按下时触发，支持老版本浏览器。但是他不支持输入法输入，也不支持``backspace``、``enter``、``shift``等键
+
+3. 其他事件
+
+   - ``ready(function)``方法，等待页面加载完成
+
+   - ``resize([data],function)``，当页面大小变化时执行
+
+     ```javascript
+     $("window").resize(function(){
+       //...
+     })
+     ```
+
+   - ``focus([data],function)``、``blur([data],function)``，当元素获得和失去焦点时触发
+
+   - ``change([data], function)``，元素的内容发生改变时触发。
+
+   - ``select([data], function)``，当textarea 或input 元素中的文本被选中时触发。
+
+   - ``submit([data], function)`` ， 提交表单时触发
+
+     ```javascript
+     $("input[type=button]").click(function(){  //选中提交按钮，当被点击时候触发
+       $("form").submit();   // 表单提交
+     })
+     
+     
+     // 阻止表单提交
+     $("input[type=button]").click(function(){  //选中提交按钮，当被点击时候触发
+       $("form").submit(function(){
+         		return false; //阻止表单提交
+       });  
+     })
+     ```
+
+     
+
+4. 事件绑定与取消
+
+   - ``on(events,[selector],[data],fn)`` 在选择元素上绑定一个或多个事件处理函数
+
+     ```javascript
+     $("a").on("mouseenter",function(){  //事件a绑定上mouseenter事件
+        //......
+     })
+     $("document").on("mouseenter","div",function(event){
+       //.. 选择器为div，即绑定所有的div上 mouseenter事件
+       event.stopPropogation() // 阻止事件冒泡
+     })
+     
+     $("document").on({
+       mouseenter:function(event){},    //绑定多个事件。 on绑定事件的好处是，可以支持动态生成的标签
+       keydown:function(event){}        // 如createElement生成的标签
+     })
+     ```
+
+   - ``off(events,[selector],[fn])``，移除一个事件上的绑定函数
+
+   - ``one(events,[selector],[fn])``，即绑定后，只执行一次就解绑定。
+
+
+
+## 动画操作
+
+1. ``animate()``，动画函数
+
+   ```javascript
+   var div = $("div");
+   div.stop().animate({opacity:0.25,     // .stop()表示 结束正在执行的动画，然后在执行新的动画animate
+               width:"256px",
+               height:"256px"},  3000)  // 使得透明度高度宽度在 3秒内发生变化
+   				.delay(2000)     //并延迟3000之后再执行 下一个动画
+               .animate({width:"50%"});
+   ```
+
+   
