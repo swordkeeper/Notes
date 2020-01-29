@@ -287,8 +287,38 @@
    div.stop().animate({opacity:0.25,     // .stop()表示 结束正在执行的动画，然后在执行新的动画animate
                width:"256px",
                height:"256px"},  3000)  // 使得透明度高度宽度在 3秒内发生变化
-   				.delay(2000)     //并延迟3000之后再执行 下一个动画
+   				.delay(2000)     //延迟3000之后再执行 下一个动画
                .animate({width:"50%"});
    ```
 
-   
+2. ``show（）/hide（）``,显示或隐藏元素。``toggle()``会同时显示与隐藏一个函数
+
+   ```javascript
+   $("div").hide(3000).delay(2000).show(); //3秒内缓慢隐藏div元素。然后延迟2秒再显示出来
+   ```
+
+3. ``fadeIn()/fadeOut()``，淡入淡出元素，合起来可以用``fadeToggle()``。 
+
+4. ``slideDown()/slideUp()``，划入划出，合起来可以用``slideToggle()``
+
+5. 设置定时器
+
+   - ``setTimeOut()``，设置计时器
+
+     ```javascript
+     $("div").setTimeOut(function(){},1000); // setTimeOut值执行一次，在1秒钟以后执行function
+     
+     var timer = setTimeOut(function(),2000);  //设置一个计时器，并清除
+     clearTimeOut(timer)
+     ```
+
+   - ``setInterval()``，设置定时器
+
+     ```javascript
+     $("div").setInterval(function(){} ,  1000); //每隔1秒执行一次
+     
+     var intervaler = setInterval(function(){},2000) //设置一个定时器，并清除
+     clearInterval(intervaler)
+     ```
+
+     
