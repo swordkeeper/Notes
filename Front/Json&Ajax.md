@@ -202,5 +202,76 @@ Json包含三种数据类型的值：
 
   JSONP``原理``：在页面上引入不同域的js脚本，来实现XMLHttpRequest请求不同域的效果。
 
+  JSONP使用步骤：
+
+  1. 通过script标签引入js文件
+  2. js文件装在成功
+  3. 执行我们在url参数中指定的函数 
+
+  JSONP使用实例：
+
+  ```html
+  <div>
+    <img src="http://www.baidu.com">  <!-- 只有src属性，或者href属性是可以访问别的域名资源的 -->
+    <!-- JSONP 正是利用了 src属性可以访问其他域的特性来实现，跨域访问数据的功能的 -->
+  </div>
+  ```
+
+  ```javascript
+  // 实际的过程如下
+  // 比如说我们要访问。   http://www.baidu.com?callback=def
+  // 我们url就可以写成 http://www.baidu.com?callback=def
+  // 这样百度服务器就收到这个url后，就会返回一个回调函数def，并给def传入应有的参数，即def(json)
+  // 所以我们写的内容就是要访问的url，以及需要使用的那个callback函数 
+  
+  // 1. 封装JSONP函数
+  function getJsonp(url, callback){   //接受两个参数，一个为跨域访问的地址，另一个为回调函数
+      if(!url) return ;  // 如果没有写地址，则不用操作
+    
+      // 随机生成一个函数名
+      var tmp = ['a','b','c','d','e','f','g','h','i','g','k'];
+      var r1 = Math.floor(Math.random()*tmp.length);
+      var r2 = Math.floor(Math.random()*tmp.length);
+      var r3 = Math.floor(Math.random()*tmp.length);
+      var randomFunctionName = tmp[r1]+tmp[r2]+tmp[r3]; //拼接出一个随机的字符串函数名
+      var callbackName = "getJsonp." + randomFunctionName; //此为一个getJsonp的回调函数名，名称随机，作为getJsonp函数的一个属性
+    
+  // 2.定义好了一个随机的函数名之后，就要修改url,即拼接成正确的请求数据url
+      if(url.indexOf("?")===-1){
+         url += "?jsonp=" + callbackName;  //传入的是一个回调函数名
+      }else{
+        url += "&jsonp=" + callbackName;
+      }
+    
+  // 3. 动态创建script标签
+    var aScript = document.createElement("script");
+  
+  // 4. 定义回调函数
+    // 因为上面2.时已经声明回调函数，所以现在就可以定义该函数的具体功能
+    getJsonp[randomFunctionName] = function(data){
+        try{   // try的原因在于，可能服务器无法解析jsonp请求
+            callback && callback(data) // 在回调函数中，执行用户传入的具体callback函数
+        }catch(e){}finally{
+            delete getJsonp[randomFunctionName]; //删除对应的随机函数名，否则太多会造成卡顿
+            aScript.parentNode.removeChild(aScript); //同理标签
+        }
+    }
+    
+    // 定义完毕，添加出script标签3
+    aScript.src = url;
+    document.getElementsByTagName("head")[0].appendChild(aScript);
+    // 这样在head里面就会添加一个script标签，并且url = 域名？jsonp=随机函数名
+    
+  
+  }
+  
+  //5. 调用封装好的jsonp函数
+  getJsonp("http://www.baidu.com/abc/1.json",function(data){
+      console.log(data);
+  })
+  ```
+
+  
+
   
 
