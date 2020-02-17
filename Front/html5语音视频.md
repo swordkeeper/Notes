@@ -108,3 +108,111 @@
   - ``firefox``
   - ``opera``
 
+### Audio标签
+
+``<audio>``标签支持的格式有``mp3``、``wav``、``ogg`` 
+
+- 使用方法
+
+  ```html
+  <audio controls>
+  	<source src="url">
+  </audio>
+  ```
+
+  ```javascript
+  // 动态生成一个audio标签
+  var myAudio = new Audio();
+  myAudio.src="url";
+  myAudio.play();
+  ```
+
+- 兼容性
+
+  - mp3 所有浏览器都支持
+  - ogg 除了safari以外都支持
+
+- 属性
+
+  ``src``、``controls``、``autoplay``、``loop``、``muted``
+
+- 事件
+
+  -  play
+  - pause
+  - duration
+  - currentTime
+  - src
+  - volume
+  - controls
+  - muted
+  - networkState 返回当前网络状态
+  - currentSrc
+  - ended
+  - loop
+  - playBackRate
+  - readyState
+  - timeupdate
+  - seeked
+  - seeking
+  - volumechange
+  - requestFullScreen
+  - load
+  - canplay
+
+
+
+
+
+### VideoJs
+
+``VideoJs``是一个专门用来处理前端视频的框架。
+
+- 引入和使用
+
+  ```html
+  <link type="tex/css" href="video-js.min.css" rel="stylesheet">
+  <body>
+     <video id='myVideoId' class="video-js vjs-big-play-center" ></video>    <!--class 必须是video-js ，已经被指定好了-->
+    <!-- vjs-big-play-center 类规定了按钮剧中显示 --> 
+  </body>
+  ```
+
+- 属性
+
+  - ``data-setup``，设置视频数据，可以传入一个json数据
+  - ``preload``，有个预加载缓冲读条。
+  - ``width``、``height``
+  - ``poster``封面
+
+- 函数
+
+  ```javascript
+  videojs("myVideoId").ready( //该库封装好了一些函数，比如videojs，它接受参数为video标签的id
+  	function(){    //封装的ready表示 视频已经准备就绪类似于 canplay属性
+      this.play(); 
+    }
+  )         
+  
+  ```
+
+  - ready()，传入一个函数，在视频准备就绪时执行
+
+  - currentTime()，返回当前时间
+
+  - duration()，返回总时间
+
+  - Buffered()，返回以缓冲的时间
+
+  - volume()，返回音量
+
+  - on()，添加事件监听
+
+    ```javascript
+    myVideo.on("ended",funciton(){
+               console.log(1);
+               })
+    ```
+
+    
+
