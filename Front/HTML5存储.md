@@ -23,7 +23,6 @@ console.log(window.sessionStorage );
   localStorage.getItem("key1"); // 返回value1的内容
   localStorage.key2="value2";   //另一种方式设置键值对
   localStorage.removeItem("key1"); //移除一个键值对
-  
   ```
 
 - 
