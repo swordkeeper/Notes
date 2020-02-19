@@ -179,45 +179,61 @@
      ```html
      <input type="tel" name="tel" />
      ```
-   - ``number``，用于输入数字（主要用于移动端）；在pc端，该文本框不能输字母（除e）
+     
+   - ``number``，用于输入数字（主要用于移动端）；在pc端，该文本框不能输字母（除e），同时有一个重要的属性与number 相关。即``step``属性，它标志每次数字的最小步长。如下，如果值为0.02，而step没有设置成0.01，那么传递到后台的值就被约等于0，并提交
 
      ```html
-     <input type="number" name="number" />
+     <input type="number" name="number" value="0.02" step="0.01"/>
      ```
      
-   
    - ``date pickers``，包括date、month、week、time、datetime（弃用）、datetime-local，（主要用于移动端）
-   
+
      ```html
      <input type="date" name="date" />
      ```
-   
+
      ```html
      <input type="month" name="month" />
      ```
-   
+
      ```html
      <input type="time" name="time" />
      ```
-   
+
    - ``range``，鼠标可以拖动的选择数值的遥杆
-   
+
      ```html
      <input type="range" name="range" min="1" max="10"/>
      ```
-   
+
    - ``search``，定义一个搜索框，可能会默认匹配输入字串
-   
+
      ```html
      <input type="search" name="search"
      ```
-   
+
    - ``color``，一个可以用来选择颜色的选择按钮
-   
+
      ```html
      <input type="color" name="color"
      ```
-   
+
+   - ``pattern``，可以用于input输入内容的正则
+
+     ```html
+     <input type="text" pattern="^\d{5}">
+     ```
+
+   - ``oninput``，该属性可以赋值一个回调函数，即当输入框有内容输入时执行
+
+     ```html
+     <input type="text" oninput="myFunction(this,data)">
+     ```
+
+     ```javascript
+     function myFunction(this,data){};
+     ```
+
      
 
 2. ``<form>``表单属性
@@ -249,6 +265,30 @@
        <input type="text" required="required" />
      </form>
      ```
+     
+   - ``enctype``，表示用于编码文件时的格式
+
+     ```html
+     <form ecntype="multipart/form-data">
+     </form>
+     ```
+
+   - ``novalidate``，用于指名该表单提交时不用验证
+
+     ```html
+     <form novalidate>
+     </form>
+     ```
+
+   - ``formnovalidate``，同理，只是用于input标签上
+
+     ```html
+     <form>
+       <input type="submit" formnovalidate>
+     </form>
+     ```
+
+     
 
 3. 链接属性
 
@@ -299,4 +339,40 @@
      </html>
      ```
 
-     
+5. 约束验证API
+
+   - ``willValidate``
+   - ``validity``，validity下面有很多限制属性，用于表示这些限制是否被限制，各字段如下
+     - badInput：错误输入
+     - customError：setCustomValidity()不满足用户设置的有效性限制
+     - patternMismatch：正则不匹配
+     - rangeOverflow/rangeUnderflow：范围超出设置的max/min
+     - stepMismatch：step不符合
+     - tooLong/tooShort：超出minLength/maxLength
+     - typeMismatch：类型不匹配，如email，url等
+     - valueMissing：required条件不匹配
+   - ``validationMessage``
+   - ``checkValidity()``，调用该方法，函数会返回元素的有效性，如果元素没有满足所有的约束，返回false
+   - ``setCustomValidity()``，用户设置检测不符合validate情况下的提示信息内容，参数传递信息字符串
+
+   
+
+
+
+### HTML5 伪类
+
+1. 表单``:required``和``:optional``伪类 ，必填伪类和选填伪类
+
+   ```css
+   input:required{     /* 选中input标签中具有required属性的 标签*/
+     width:190px; 
+   }
+   ```
+
+   
+
+2. 表单``:in-range``和``:out-of-range``伪类
+
+3. 表单``:valid``和``:invalid``伪类 
+
+4. 表单``:read-only``和``:read-write``伪类

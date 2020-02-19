@@ -56,7 +56,7 @@ localStorage.setItem("timer",new Date().getMinues() + Number(3)); //存储当前
 
 ### IndexedDB (html5数据库)
 
-html5提供的一个特殊的数据库
+html5提供的一个特殊的数据库，indexedDB不能跨域存储
 
 1. 创建/打开数据库
 
