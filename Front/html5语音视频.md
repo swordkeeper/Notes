@@ -216,3 +216,48 @@
 
     
 
+
+
+### 媒体查询
+
+ 媒体查询，其实就是检测媒体的种类，用于根据设备的大小种类，来定义css样式
+
+1. 媒体查询简单例子
+
+   ```html
+   <style>
+     @media screen and (min-height:900px){   
+       /*这里就调用了一个媒体查询，@media 表示媒体查询，screen 和 min-height分别代表两个条件，即查询媒体是屏幕，且最小高度为900px。 如果两个条件成立，则执行下面的样式代码。*/
+       body{background:red;width:375px;}
+     }
+   </style>
+   ```
+
+2. 媒体查询的类型
+
+   - ``all(default)``，所有设备
+   - ``screen``，屏幕设备
+   - ``print``，打印预览设备
+   - ``speech``，阅读器设备
+
+3. 媒体的条件
+
+   ``and``、``,``、``not``，分别代表条件查询的，与或非。
+
+4. 媒体表达式
+
+   - ``max-width/min-width``，``max-height/min-height``，媒体的最大最小宽高
+   - ``-webkit-device-pixel-ratio/-webkit-max-device-pixel-ratio/-webkit-min-device-pixel-ratio``，设备的像素比
+   - ``orientation``: landscape横屏/portrait竖屏 
+
+5. 媒体查询的操作
+
+   1. 写断点，即屏幕样式变化的分界点，一般分割如下
+
+      - ``xs``超小屏幕，width<576px，小屏手机
+      - ``sm``小屏幕，576px~768px，大屏手机
+      - ``md``，768px~992px，平板或是小屏显示器
+      - ``lg``，992px~1200px，普通显示器
+      - ``xl``，>1200px，大屏显示器 
+
+      
