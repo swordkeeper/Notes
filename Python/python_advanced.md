@@ -256,7 +256,7 @@ import time
 
 def sing():
   while True:
- 	 		print("singing")
+    	print("singing")
   		time.sleep(1) #每隔1秒唱歌
   
 def dance():
