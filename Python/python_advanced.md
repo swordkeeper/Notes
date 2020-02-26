@@ -274,3 +274,58 @@ if __name__ == "__main__":
     main()
 ```
 
+
+
+### 进程间的通信
+
+###### 通讯队列
+
+- 简单用法
+
+    ```python
+    from multiprocessing import Queue
+    
+    q = Queue(3)   # 创建一个进程通讯队列，该队列可以暂存3次数据
+    q.put(232)
+    q.put("abc")
+    q.put([1,2,3])
+    # q.put("cc")   阻塞，因为放入太多，等待提取清空
+    print(q.get())
+    print(q.get())
+    print(q.get())
+    #print(q.get()) 阻塞
+    ```
+
+- 进程实例
+
+    ```python
+    import multiprocessing
+    # 模拟网络下载器
+    def recv(q):
+        '''下载数据接收'''
+        received_data = ["hello","world","123"] # 模拟下载好的数据
+        for i in received_data:
+            q.put(i)   # 放入数据到队列中
+    
+    def handle(q):
+        '''处理下载好的数据'''
+        handled_data = list() # 建立一个列表，用于提取数据
+        while True:
+            tmp = q.get()  # 从队列中提取数据
+            handled_data.append(tmp)
+            if q.empty():  # 判断队列是否为空
+                break
+        print(handled_data)
+    
+    def main():
+        q = multiprocessing.Queue(3) # 定义一个进程间通讯的队列
+        p1 = multiprocessing.Process(target=recv,args=(q,)) #创建下载进程，传递进程队列为参数
+        p2 = multiprocessing.Process(target=handle,args=(q,))  #创建处理进程，传递进程队列为参数
+        p1.start()
+        p2.start()
+    if __name__ == "__main__":
+        main()
+    ```
+
+    
+
