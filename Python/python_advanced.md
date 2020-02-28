@@ -248,31 +248,94 @@
 
 ### 进程
 
-类似于线程
+- 类似于线程
 
-```python
-import multiprocessing
-import time
-
-def sing():
-  while True:
-    print("sing")
-    time.sleep(1)
-  
-def dance():
-  while True:
-      print("dancing")
-      time.sleep(1)  #每隔1秒跳舞
+    ```python
+    import multiprocessing
+    import time
+    
+    def sing():
+      while True:
+        print("sing")
+        time.sleep(1)
       
-g_num = 100.  #全局变量   
-def main():
-  t1 = multiprocessing.Process(target=sing)  # args是一个元组，表示专递给子进程的参数
-  t2 = multiprocessing.Process(target=dance)   # target 表示 子进程执行函数的入口函数地址
-  t1.start()
-  t2.start()
-if __name__ == "__main__":
-    main()
-```
+    def dance():
+      while True:
+          print("dancing")
+          time.sleep(1)  #每隔1秒跳舞
+          
+    g_num = 100.  #全局变量   
+    def main():
+      t1 = multiprocessing.Process(target=sing)  # args是一个元组，表示专递给子进程的参数
+      t2 = multiprocessing.Process(target=dance)   # target 表示 子进程执行函数的入口函数地址
+      t1.start()
+      t2.start()
+    if __name__ == "__main__":
+        main()
+    ```
+
+- 进程池
+
+    ```python
+    from multiprocessing import Pool
+    import time,random,os
+    # 导入进程池类
+    
+    def worker(msg):
+        t_start = time.time()
+        print("我是进程:%d -%s 开始执行" % (msg, os.getpid()))
+        time.sleep(random.random()*2)  #让进程睡眠
+        print(msg,"执行完毕，用时%.2f" % (time.time()-t_start))
+    
+    def main():
+        po = Pool(3)  #创建一个进程池，里面至多3可放个进程
+        for i in range(10):
+            po.apply_async(worker,(i,))  #异步创建10个编号不同的进程，将进程放入进程池中
+            # 此处的意思是，向进程池中添加了10个进程，但是进程池最多开通3个进程给他们并行使用。其他7个则等待进程池
+            # 分配进程。已经获得进程池中的进程当运行完毕后，释放进程让出进程允许其他worker进入调度。
+        print("--------pool start---------")
+        po.close()   # 关闭进程池
+        po.join()    # 等待子进程结束，必须放在close之后。因为pool进程创建了3个子进程，则需要等待
+        # 默认情况下主进程会自动等待子进程执行完毕才推出。但是pool进程是一个子进程，他没有主进程的这种默认属性
+        # 主进程不会等待一个由pool子进程拉起来的子孙进程。因而会关闭，从而需要写po.join()
+        print("---------pool end----------")
+    if __name__ == "__main__":
+        main()
+        
+    ''' 执行结果
+    --------pool start---------
+    我是进程:1 -4694 开始执行
+    我是进程:0 -4693 开始执行
+    我是进程:2 -4695 开始执行
+    1 执行完毕，用时0.27
+    我是进程:3 -4694 开始执行
+    0 执行完毕，用时1.16
+    我是进程:4 -4693 开始执行
+    3 执行完毕，用时1.17
+    我是进程:5 -4694 开始执行
+    2 执行完毕，用时1.60
+    我是进程:6 -4695 开始执行
+    4 执行完毕，用时0.58
+    我是进程:7 -4693 开始执行
+    5 执行完毕，用时0.50
+    我是进程:8 -4694 开始执行
+    8 执行完毕，用时0.20
+    我是进程:9 -4694 开始执行
+    7 执行完毕，用时0.65
+    9 执行完毕，用时0.96
+    6 执行完毕，用时1.61
+    ---------pool end----------
+    '''
+    # 可以发现一直是4693、4694、4695三个进程在调度
+    ```
+
+    进程池中的队列可以这么创建
+
+    ```python
+    q = multiprocessing.Manager().Queue()
+    ```
+
+    
 
 
 
@@ -296,7 +359,7 @@ if __name__ == "__main__":
     #print(q.get()) 阻塞
     ```
 
-- 进程实例
+- 进程``通讯队列``实例
 
     ```python
     import multiprocessing
@@ -312,6 +375,7 @@ if __name__ == "__main__":
         handled_data = list() # 建立一个列表，用于提取数据
         while True:
             tmp = q.get()  # 从队列中提取数据
+            # 也可以用q.get_nowait()该方法为非阻塞提取，但是如果队列为空，则会返回错误
             handled_data.append(tmp)
             if q.empty():  # 判断队列是否为空
                 break
