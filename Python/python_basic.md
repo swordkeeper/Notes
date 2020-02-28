@@ -381,9 +381,9 @@ print(result.group())   # group返回匹配到的组
 |   (?P=name)    | 引用别名为name分组匹配到的字符串                             |
 |   .search()    | 搜索某内容，即不是从字符串开头匹配。``ret = re.search(r"\d+", "阅读次数为 9999")``，返回9999 |
 |   .findall()   | 搜索所有<br />``ret = re.findall(r"\d+", "python = 9999, c = 7890, c++ = 12345")``<br />返回 ['9999', '7890', '12345'] |
-|   .replace()   | 替换所有搜索<br />``ret = re.sub(r"\d+", '998', "python = 997")``<br />返回python = 998 |
-|                |                                                              |
-|                |                                                              |
+|   .replace()   | 替换所有搜索<br />``ret = re.sub(r"\d+", '998', "python = 997")``<br />返回python = 998。即将997换成998 |
+|    .split()    | 切割字符串<br />``ret = re.split(r":| ","info:xiaoZhang 33 shandong")``<br / >以``:``或者`` ``（空白）来切割字符串，返回<br />['info', 'xiaoZhang', '33', 'shandong'] |
+|       ??       | 在任何量词包括``?``、``+``、``*``、``{m,n}``后面在添加一个？，则使得该量词变为非贪婪模式 |
 |                |                                                              |
 |                |                                                              |
 |                |                                                              |
