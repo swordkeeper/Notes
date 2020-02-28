@@ -377,11 +377,11 @@ print(result.group())   # group返回匹配到的组
 |       \|       | 匹配任意一个，或的意思                                       |
 |      (ab)      | 将括号中字符作为一个分组                                     |
 |      \num      | 引用分组num匹配到的字符串。转义字符加数字，代表第几个匹配的分组 |
-| ``(?P<name>)`` | 分组起别名<br />``ret = re.match(r"<(?P<name1>\w*)><(?P<name2>\w*)>.*</(?P=name2)></(?P=name1)>", "<html><h1>www.itcast.cn</h1></html>") ``，前面用``<>``起了别名，后面用``=``使用别名 |
+| ``(?P<name>)`` | 分组起别名<br />``ret = re.match(r"<(?P<name1>\w*)><(?P<name2>\w*)>.*</(?P=name2)></(?P=name1)>", "<html><h1>www.itcast.cn</h1></html>") ``<br />前面用``<>``起了别名，后面用``=``使用别名 |
 |   (?P=name)    | 引用别名为name分组匹配到的字符串                             |
-|                |                                                              |
-|                |                                                              |
-|                |                                                              |
+|   .search()    | 搜索某内容，即不是从字符串开头匹配。``ret = re.search(r"\d+", "阅读次数为 9999")``，返回9999 |
+|   .findall()   | 搜索所有<br />``ret = re.findall(r"\d+", "python = 9999, c = 7890, c++ = 12345")``<br />返回 ['9999', '7890', '12345'] |
+|   .replace()   | 替换所有搜索<br />``ret = re.sub(r"\d+", '998', "python = 997")``<br />返回python = 998 |
 |                |                                                              |
 |                |                                                              |
 |                |                                                              |
