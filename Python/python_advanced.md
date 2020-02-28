@@ -393,3 +393,110 @@
 
     
 
+### 协程
+
+协程（coroutine）是比线程还轻量级的多任务操作模式，是``手动``模拟计算机并发执行。关键字``yield``
+
+``yield``关键字可以实现，在程序循环当中跳出函数，并且在下次迭代之前阻塞自身。这样的特性完全于多线程/进程一样。
+
+具体关键字，参考生成器。
+
+- 协程实例
+
+    ```python
+    def task1():
+        num = 1
+        while True:
+            print("task1: --- %d ---" % num)
+            num += 1
+            yield
+    def task2():
+        num = 1
+        while True:
+            print("task2: --- %d ---" % num)
+            num += 1
+            yield
+    def main():
+        t1 = task1()  # 定义了yield关键字的函数，不再是函数，而是生成器。此处创建生成器对象
+        t2 = task2()
+        try:
+            while True:
+                next(t1)    # 协程交替执行
+                next(t2)
+        except  Exception as err:
+            pass  # 捕获迭代完成异常
+    
+    if __name__ == "__main__":
+        main()
+    ```
+
+    该方式模拟了线程/进程间的切换
+
+- 协程库``greenlet``，封装了有关协程的操作
+
+    ```python
+    from greenlet import greenlet
+    import time
+    
+    # greenlet 中的 greenlet 是对yield的封装
+    def task1():
+        while True:
+            print("task1")
+            t2.switch()
+            time.sleep(1)
+    def task2():
+        while True:
+            print("task2")
+            t1.switch()
+            time.sleep(1)
+    t1 = greenlet(task1)   # 向greenlet对象中传递一个生成器
+    t2 = greenlet(task2)
+    
+    # t1.switch表示切换到t1中执行。
+    t1.switch()
+    
+    ```
+
+    - greenlet，只有在sleep的时候才切换，如果程序没有进入睡眠队列，他不进行切换调度
+
+- ``gevent``库是一个网络并发库，他的实现就是用协程实现
+
+    ```python
+    import gevent
+    def f(n):
+        for i in range(n):
+            print(gevent.getcurrent(),i) # 并发执行的函数体,getcurrent()表示返回执行函数代码
+            gevent.sleep(0.5)  # 协程中只能使用gevent.sleep
+    
+    g1 = gevent.spawn(f,5)  #并发函数设置，传递函数入口和所带参数
+    g2 = gevent.spawn(f,5)
+    g3 = gevent.spawn(f,5)
+    
+    g1.join()  # 等待函数结束
+    g2.join()
+    g3.join() 
+    ```
+
+    - gevent 只有在程序join，也就是程序sleep时进行切换调度
+
+- 标准``gevent``代码
+
+    ```python
+    from gevent import monkey
+    import gevent
+    import random, time
+    
+    # 将耗时操作封装替换gevent.sleep
+    monkey.patch_all()
+    
+    def coroutine_work(coroutine_name):
+       for i in range(10):
+           print(coroutine_name,i)
+           time.sleep(random.random()) # 因为封装了monkey.patch_all，所以可以用系统时间
+    gevent.joinall([  # 封装join写法
+       gevent.spawn(coroutine_work,"worker1")   #创建对象，启动gevent并发
+       gevent.spawn(coroutine_work,"worker2")
+    ])
+    ```
+
+    
