@@ -40,7 +40,7 @@
     for x,y in enumerate(myList):
         print(x)
         print(y)
-    # 返回
+    # 返回 
     """
     0
     1
@@ -51,6 +51,79 @@
     3
     222
     """
+    ```
+
+5. 属性、静态方法
+
+    ```python
+    class T(object):
+       @staticmethod
+        function():
+          pass
+       @property
+       function1(self):
+         return 100     # property必须返回一个值，参数也必须只有self 调用时用 a = T()  a.size
+       @function1.setter(self, value):
+          pass
+       @function1.deleter(self):
+          pass 
+        
+       #  魔法方法也可以实现该方法，即property
+       #  property(arg1,arg2,arg3,description)  前三个参数分别代表，表达式，设置式，删除式 
+    ```
+
+6. property方法，定义getter和setter
+
+    ```python
+    class income(object):
+       def __init__(self):
+           self.money = 0
+       def __money_getter(self):
+           return self.money
+       def __money_setter(self, value):
+           self.money = value
+          
+       money = property(__money_getter, __money_setter)
+    
+    myMoney = income()
+    myMoney.money = 100
+    print(myMoney.money)
+    ```
+
+7. 上下文管理器``__enter__()``和``__exit__()``方法
+
+    ```python
+    class File():
+        # 自定义的方法类，如果定义了__enter__()和__exit__()方法，则就可以调用with关键字啦
+        def __init__(self, filename, mode):
+            self.filename = filename
+            self.mode = mode
+    
+        def __enter__(self):
+            print("entering")
+            self.f = open(self.filename, self.mode)
+            return self.f
+    
+        def __exit__(self, *args):
+            print("will exit")
+            self.f.close()
+            
+            
+    with File('out.txt', 'w') as f:    # 自定义的类，可以使用File方法了。with关键字，就会自动调用enter和exit方法
+        print("writing")
+        f.write('hello, python')
+    ```
+
+    也可以用如下方法定义上下文
+
+    ```python
+    from contextlib import contextmanager
+    
+    @contextmanager
+    def my_open(path, mode):
+        f = open(path, mode)
+        yield f
+        f.close()
     ```
 
     
@@ -354,40 +427,40 @@ result = re.match("hello","hellohahahah")
 print(result.group())   # group返回匹配到的组
 ```
 
-|      字符      | 功能                                                         |
-| :------------: | :----------------------------------------------------------- |
-|       .        | 匹配任意字符，除了\n                                         |
-|       []       | 匹配[]中列举的字符                                           |
-|       \d       | 匹配一个数字0~9                                              |
-|       \D       | 匹配非数字                                                   |
-|       \s       | 匹配空白，包括空格、换行、制表符                             |
-|       \S       | 匹配非空白                                                   |
-|       \w       | 匹配单词字符a-z、A-Z、0-9、_                                 |
-|       \W       | 匹配非单词字符                                               |
-|       -        | 量词``-``，[0-9]表示匹配0～9之间任意数字                     |
-|                | [0-35-9]匹配0～3或5～9之间的数字                             |
-|       *        | 量词``*``。匹配前一个字符出现0次或者无限次，即可有可无       |
-|       +        | 量词``+``。匹配前一个字符出现1次或者无限次，即至少有1次      |
-|       ？       | 量词``?``。匹配前一个字符出现1次或者0次，即要么有1次，要么没有 |
-|      {m}       | 量词``{m}``。匹配前一个字符出现m次                           |
-|     {m,n}      | 量词``{m,n}``。匹配前一个字符出现从m到n次                    |
-|       ^        | 匹配开头                                                     |
-|       $        | 匹配字符串结尾                                               |
-|       \        | 转义字符                                                     |
-|       \|       | 匹配任意一个，或的意思                                       |
-|      (ab)      | 将括号中字符作为一个分组                                     |
-|      \num      | 引用分组num匹配到的字符串。转义字符加数字，代表第几个匹配的分组 |
-| ``(?P<name>)`` | 分组起别名<br />``ret = re.match(r"<(?P<name1>\w*)><(?P<name2>\w*)>.*</(?P=name2)></(?P=name1)>", "<html><h1>www.itcast.cn</h1></html>") ``<br />前面用``<>``起了别名，后面用``=``使用别名 |
-|   (?P=name)    | 引用别名为name分组匹配到的字符串                             |
-|   .search()    | 搜索某内容，即不是从字符串开头匹配。``ret = re.search(r"\d+", "阅读次数为 9999")``，返回9999 |
-|   .findall()   | 搜索所有<br />``ret = re.findall(r"\d+", "python = 9999, c = 7890, c++ = 12345")``<br />返回 ['9999', '7890', '12345'] |
-|   .replace()   | 替换所有搜索<br />``ret = re.sub(r"\d+", '998', "python = 997")``<br />返回python = 998。即将997换成998 |
-|    .split()    | 切割字符串<br />``ret = re.split(r":| ","info:xiaoZhang 33 shandong")``<br / >以``:``或者`` ``（空白）来切割字符串，返回<br />['info', 'xiaoZhang', '33', 'shandong'] |
-|       ??       | 在任何量词包括``?``、``+``、``*``、``{m,n}``后面在添加一个？，则使得该量词变为非贪婪模式 |
-|                |                                                              |
-|                |                                                              |
-|                |                                                              |
-|                |                                                              |
-|                |                                                              |
-|                |                                                              |
+|      字符       | 功能                                                         |
+| :-------------: | :----------------------------------------------------------- |
+|        .        | 匹配任意字符，除了\n                                         |
+| ``[]``和``[^]`` | 匹配[]中列举的字符，[^]表示不在括号中的字符                  |
+|       \d        | 匹配一个数字0~9                                              |
+|       \D        | 匹配非数字                                                   |
+|       \s        | 匹配空白，包括空格、换行、制表符                             |
+|       \S        | 匹配非空白                                                   |
+|       \w        | 匹配单词字符a-z、A-Z、0-9、_                                 |
+|       \W        | 匹配非单词字符                                               |
+|        -        | 量词``-``，[0-9]表示匹配0～9之间任意数字                     |
+|                 | [0-35-9]匹配0～3或5～9之间的数字                             |
+|        *        | 量词``*``。匹配前一个字符出现0次或者无限次，即可有可无       |
+|        +        | 量词``+``。匹配前一个字符出现1次或者无限次，即至少有1次      |
+|       ？        | 量词``?``。匹配前一个字符出现1次或者0次，即要么有1次，要么没有 |
+|       {m}       | 量词``{m}``。匹配前一个字符出现m次                           |
+|      {m,n}      | 量词``{m,n}``。匹配前一个字符出现从m到n次                    |
+|        ^        | 匹配开头                                                     |
+|        $        | 匹配字符串结尾                                               |
+|        \        | 转义字符                                                     |
+|       \|        | 匹配任意一个，或的意思                                       |
+|      (ab)       | 将括号中字符作为一个分组                                     |
+|      \num       | 引用分组num匹配到的字符串。转义字符加数字，代表第几个匹配的分组 |
+| ``(?P<name>)``  | 分组起别名<br />``ret = re.match(r"<(?P<name1>\w*)><(?P<name2>\w*)>.*</(?P=name2)></(?P=name1)>", "<html><h1>www.itcast.cn</h1></html>") ``<br />前面用``<>``起了别名，后面用``=``使用别名 |
+|    (?P=name)    | 引用别名为name分组匹配到的字符串                             |
+|    .search()    | 搜索某内容，即不是从字符串开头匹配。``ret = re.search(r"\d+", "阅读次数为 9999")``，返回9999 |
+|   .findall()    | 搜索所有<br />``ret = re.findall(r"\d+", "python = 9999, c = 7890, c++ = 12345")``<br />返回 ['9999', '7890', '12345'] |
+|   .replace()    | 替换所有搜索<br />``ret = re.sub(r"\d+", '998', "python = 997")``<br />返回python = 998。即将997换成998 |
+|    .split()     | 切割字符串<br />``ret = re.split(r":| ","info:xiaoZhang 33 shandong")``<br / >以``:``或者`` ``（空白）来切割字符串，返回<br />['info', 'xiaoZhang', '33', 'shandong'] |
+|       ??        | 在任何量词包括``?``、``+``、``*``、``{m,n}``后面在添加一个？，则使得该量词变为非贪婪模式 |
+|                 |                                                              |
+|                 |                                                              |
+|                 |                                                              |
+|                 |                                                              |
+|                 |                                                              |
+|                 |                                                              |
 
