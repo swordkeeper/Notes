@@ -101,8 +101,14 @@
     # 创建socket
     tcp_server_socket = socket.socket(AF_INET,socket.SOCKET_STREAM)
     
+    # 非阻塞链接，可以选择添加
+    # tcp_server_socket.setblocking(False)
+    
     # 本地socket
     tcp_server_addr = ("",8080)   # 服务器端需要绑定端口
+    
+    # 本行代码使得四次挥手之后，链接可以被直接释放，即端口不会被长期占用
+    tcp_server_socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR, 1)
     
     # 绑定端口
     tcp_server_socket.bind(tcp_server_addr)
@@ -115,11 +121,14 @@
         # 获得客户端链接信息
         client_socket, client_socket_addr = tcp_server_socket.accept()  # 接受成功，获得元组
     
+        # 客户端链接也可以选择性的设置为非阻塞
+        client_socket.setblocking(False)
+        
         # 用接受成功的链接，收发数据
         recv_data = client_socket.recv(1024)  # 收
         print(recv_data.decode("utf-8"))
     
-        client_socket.send("你好我是服务器".encode("utf-8")) # 发
+    client_socket.send("你好我是服务器".encode("utf-8")) # 发
     
         # 关闭某个客户端链接
         client_socket.close()
@@ -128,7 +137,7 @@
     tcp_server_socket.close()
     exit()
     ```
-
+    
     
 
 
@@ -499,4 +508,73 @@
     ])
     ```
 
+
+
+
+###  epoll 高并发
+
+``epoll`` 相对于``select``、``poll``来说，它是使用``mmap技术``和``事件触发模式``，他比轮询的方式可以实现更高的并发
+
+```python
+import select 
+
+epl = select.epoll()  #创建一个epool对象，该对象实际上也同时开通了一个mmap共享空间
+
+# 创建一个epoll对象之后，将需要监听事件的   文件描述符  放入到epool空间中进行监听
+epl.register(tcp_server_socket.fileno(), select.EPOLLIN)    
+# 将 tcp服务器监听对象的 文件描述符 放入监听池, select.EPOLLIN 参数表示对前面添加进去的事件，监听输入，即输入到来时触发
+
+fd_event_dict = dict()  # 定义一个字典，方便文件描述符和socket对象之间的转换 
+
+while True:
+   fd_event_list = epl.poll()# poll方法就默认阻塞epl，直到epl中添加的文件描述符的监听有相应，则通过事件响应方式唤起该对象。
+   # 该方法返回一个，准备就绪列表。该别表格式为 [(fd,event),(fd1,event1),....]
+  
+   for fd, event in fd_event_list:   
+       if fd == tcp_server_socket.fileno():  # 判断是不是服务器监听对象就绪
+          	new_socket, client_addr = tcp_server_socket.accept() 
+            epl.register(new_socket.fileno(),select.EPOLLIN)
+            fd_event_dict[new_socket.fileno()] = new_socket
+       else:
+          recv_data = fd_event_dict[fd].recv(1024).decode("utf-8")
+          if recv_data:
+             # xxxxx   处理数据
+          else:
+             fd_event_list[fd].close() # 关闭socket
+             fd_event_list.unregister(fd)  # epoll中清除该文件描述符
+             del fd_event_dict[fd]  # 清除字典
     
+   
+```
+
+
+
+### GIL 
+
+``GIL``全局性解释锁
+
+1. GIL不是python语言的问题，而是python历史解释器的问题。
+2. GIL中的默认cpython解释器，会有这个问题
+3. 问题是，``多个线程同一时间只能有一个线程占用CPU一核``。造成的效果，等价于单线程效果。
+4. GIL多线程 还是能提高一些效率的，因为虽然同一时间只能一个线程占用一核心。但是在出现``IO``等睡眠情况时，还是会发生线程切换的。因而``GIL``多线程还是会提高``IO密集``型的程序。但是对于``计算密集``型的程序，提升效果不佳。
+5. 解决方法，使用别的类型解释器如jpython。或者换语言编写相同代码，然后通过python调用 
+
+
+
+###  深拷贝
+
+Python 中一切变量都是引用。
+
+深拷贝需要``copy``包
+
+```python
+import copy
+
+a = 25
+c = copy.deepcopy(a)
+print(id(a))
+print(id(c))  # 两个id不一样 
+
+d = copy.copy(a)  # 浅拷贝   至进行一层拷贝，不进行深层拷贝 
+```
+
