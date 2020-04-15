@@ -213,3 +213,9 @@ ES6 中可以对unicode添加一个``{}``将其阔住，代表这是一个整体
 
 例如：``/u{1f436}``，就表示🐶。
 
+获取unicode编码
+
+```javascript
+let myUnicode = '🐶'.codePointAt(0).toString(16); // 获取🐶的码点，然后在转换成16进制字符串
+```
+
