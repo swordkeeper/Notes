@@ -815,12 +815,6 @@
 
     - ``animation: name duration timing-function delay iteration-count direction  fill-mode play-state``，必须值为name 和 duration ， 写法对顺序没有要求，但是因为duration是必须的，所以会优先匹配duration而不是delay
 
-
-
-
-
-
-
 ### 防止图片抖动
 
 1. 图片抖动的愿意主要是因为浏览器重复的不停的``渲染图片``，即刷新图片。解决办法

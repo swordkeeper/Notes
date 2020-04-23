@@ -119,7 +119,7 @@ Object.seal(CST)  // 封住CST，使得CST中不能添加或删除元素
     const {name, age, hoby} = obj1   // 名称，即key必须相同
     const {name}  = obj1  // 只匹配一个变量的赋值 等等价于 const name = obj1.name
     const {hoby: [hoby1]} = obj1 
-    // 取不到skill，只是取到skill下的列表中第一个元素，然后将列表第一个值赋值给skill1(列表中元素可以自己起名字)
+    // 取不到hoby，只是取到hoby下的列表中第一个元素，然后将列表第一个值赋值给hoby1(列表中元素可以自己起名字)
     const {hoby:[hoby1,hoby2]} = obj1 // 取两个
     // 注意 ： 的作用，表示赋值，即取到对象中 hoby的内容，然后继续 解构赋值给 ：后面的部分
     ```

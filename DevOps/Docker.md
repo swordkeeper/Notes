@@ -97,9 +97,11 @@ services:   # service 类似于docker run命令
 			WORDPRESS_DB_PASSWORD: root
 		networks:        # 所使用到的网络
 			- my-bridge
+		links:
+			- mysql:mysql
 			
 	mysql: 
-		image: mysql
+		image: mysql:5.7
 		environment: 
 			MYSQL_ROOT_PASSWORD: root
 			MYSQL_DATABASE: wordpress

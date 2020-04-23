@@ -14,8 +14,6 @@ mysql -u root -p
 exit
 ```
 
-
-
 ### 常用字段类型
 
 - 整数，int(各种int)
@@ -26,8 +24,6 @@ exit
 - 枚举类型，enum
 - 数据库中只存储图片在服务器的路径，或者是url
 - Unsigned, 无符号
-
-
 
 ### 约束
 
@@ -184,8 +180,6 @@ select now();
 select version();
 ```
 
-
-
 ### 引擎
 
 ```sql
@@ -193,8 +187,6 @@ ENGINE=InnoDB
 -- InnoDB和MyISM引擎
 -- InnoDB支持事务、外健、行级锁
 ```
-
-
 
 ### 索引
 
@@ -205,8 +197,6 @@ show index from myTable; -- 查看一个表的索引
 
 drop index 索引名 on 表名 ; -- 删除索引， 所以一般用于查询多的 列， 更新频繁的不适合建立索引
 ```
-
-
 
 ### 授权用户
 
@@ -235,25 +225,17 @@ update user set authentication_string=password('123') where user='laowang';
 flush privileges
 ```
 
-
-
 ### 删除用户
 
 ```sql
 drop user "用户名"@"地址"
 ```
 
-
-
 ### 导出数据库
 
 ```bash
 mysqldump -uroot -p --lock-all-tables 数据库名字 > newsql.sql # --lock-all-tables表示锁住所有表，防止导出时有数据变动
 ```
-
-
-
-
 
 ## 服务器管理
 
