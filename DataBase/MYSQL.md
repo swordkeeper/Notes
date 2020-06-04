@@ -74,7 +74,7 @@ exit
     desc myTable;
     
     -- 添加数据主键
-    create table  myTable(id int primary key not null auto_increment, name varchar(20));
+    create table myTable(id int primary key not null auto_increment, name varchar(20));
     
     create table students(
        id int unsigned not null auto_increment primary key,

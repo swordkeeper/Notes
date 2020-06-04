@@ -198,7 +198,7 @@ function myfirstfunction(arg1,arg2){   //函数定义
 myfirstfunction("myname","myage");
 ```
 
-函数默认定义一个关键字``arguments``，它反映的是参数列表，类似于不``Array``，但又不同于``Array``
+函数默认定义一个关键字``arguments``，它反映的是参数列表，类似于``Array``，但又不同于``Array``
 
 ```javascript
 function myfunc(arg1,arg2){
@@ -211,8 +211,8 @@ myfunc("hello");   //没有传递第二个参数，则函数在typeof(arg2)时�
 myfunc("hello","wolrd","how are u");  //该函数调用有三个参数，但是函数只有两个，则第三个参数会被存在于默认函数栈空间
 
 function myfunc2(){
-  Document.write(arguments.length);  //查询arguments的长度
-  Document.write(arguments[2]);
+  document.write(arguments.length);  //查询arguments的长度
+  document.write(arguments[2]);
 }
 myfunc2("hello","wolrd","how are u");   //如上所示，则关键字  arguments可以返回所有传递进函数调用的参数
 ```
@@ -229,8 +229,6 @@ myfunc2("hello","wolrd","how are u");   //如上所示，则关键字  arguments
   ```
 
   
-
-
 
 #### 内置对象
 
@@ -549,7 +547,7 @@ DOM（Document Object Model 文档对象），提供了JavaScript一种操作HTM
    - ``element.getAttribute("attribute")``，获取一个属性
 
      ```javascript
-      //. <input type="text" id="input"/>  该标签有属性 type 和 id， style只是一个标签的一个属性而已
+      // <input type="text" id="input"/>  该标签有属性 type 和 id， style只是一个标签的一个属性而已
      var chr = document.getElementById("input");
      chr.getAttribute("type");   //可以以这种方式获得input标签的type属性，也可以如下
      chr.type     //该方式也可以获得input标签的type属性，但是该种方法不能获得 class类属性，因为class有点标记。而且该方法只能用于 ``标签自带的属性``， 用户定义的属性无效。
@@ -753,7 +751,7 @@ HTML属性分为：固有属性``property``和自定义属性``attribute``，所
 
   ```javascript
   var attr= document.createAttribute("data-title");
-  attr.value="ddd";  //创建属性对象并赋值
+  attr.value="ddd";  // 创建属性对象并赋值
   div.attributes.setNamedItem(attr);
   ```
 
@@ -961,7 +959,7 @@ btn.addEventListener('click',function(){    //添加事件监听器，即事件�
      btn.attachEvent("onclick",function(){
        alert("IE8, click");
      });
-      ```
+     ```
 
    - ``detachEvent(event,function)``，移除事件
 

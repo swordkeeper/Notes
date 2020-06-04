@@ -7,13 +7,13 @@ promise 函数，是针对**异步状态**下的回调函数的一种改进。�
 ### 定义一个promise
 
 ```javascript
-let f = new Promise(resolve =>{   //定义一个函数，传递一个回调函数（此处为一个匿名函数，该函数接受参数resolve)
+let f = new Promise((resolve) =>{   //定义一个函数，传递一个回调函数（此处为一个匿名函数，该函数接受参数resolve
     setTimeout(function(){
         resolve();
     }, 1000);
 });
 
-f.then(function(){   // Promise.then方法，代表开始这行promise对象，回调函数也就被执行。此处的匿名函数传递给了resolve
+f.then(function(){   // Promise.then方法，代表开始运行promise对象，回调函数也就被执行。此处的匿名函数传递给了resolve
     console.log(1);
 });
 
@@ -53,6 +53,8 @@ f(true).then(vvv, rrr);
 
 ```
 
+返回失败调用``f.catch(() => {})``方法
+
 ### all/race
 
 ```javascript
@@ -60,8 +62,6 @@ let all_p = Promise.all([p1, p2, p3]) // p1, p2, p3 为三个返回promise对象
 // 只有所有的都执行成功，才返回成功
 let race_p = Promise.race([p1, p2, p3])  // 只要有一个执行成功，就返回成功
 ```
-
-
 
 
 

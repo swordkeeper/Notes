@@ -6,7 +6,7 @@
 
 - HTML 4 的声明
 
-<img src="./images/Screen Shot 2019-10-19 at 1.10.44 am.png"/>
+<img src="../images/Screen Shot 2019-10-19 at 1.10.44 am.png"/>
 
 - HTML 5的声明
 
@@ -137,7 +137,7 @@
    </p>
    ```
 
-2. ``<mark>``标注标签，着重强调标签，标记文本，被mark的文本会黄色高梁显示
+2. ``<mark>``标注标签，着重强调标签，标记文本，被mark的文本会黄色高亮显示
 
    ```html
    <p>
@@ -368,8 +368,6 @@
      width:190px; 
    }
    ```
-
-   
 
 2. 表单``:in-range``和``:out-of-range``伪类
 

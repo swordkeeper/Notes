@@ -189,7 +189,7 @@
    // dblclick([data,function])  双击事件
    
    // mousedown 、 mouseup ，鼠标按下和松开事件
-    ```
+   ```
 
    - `` click`` 单机事件
    - ``dblclick`` 双击事件

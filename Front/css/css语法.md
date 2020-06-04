@@ -86,18 +86,17 @@ CSS语句可以放在``<head>``标签之内，也可单独存储为``.css``的�
    .yellow{color:yellow;}   /*所有class=yellow的标签全部设置为黄色 */
    h1.yellow{font-size:30px;}  /*特殊的，将yellow类中的h1标签设置为30px大小的字体 */ 
    .one{text-decoration:underline;}
-   
    ```
-
-   html
-
-   ```html
+   
+html
+   
+```html
    <h1 class="red">header</h1>
    <p class="yellow">paragraph</p>
    <h1 class="yellow">paragraph</h1>
    <h2 class="yellow one">paragraph</h2>   <!-- 此标签同时属于两个类yellow 和 one ； 不同类用空格隔开 --> 
    ```
-
+   
 3. ID选择器
 
    css

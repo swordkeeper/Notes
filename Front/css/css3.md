@@ -25,7 +25,7 @@
 
    ```html
    <section>
-   	<div>div article外</div>
+      <div>div article外</div>
       <article>
      		<div>div article内</div>
       </article>
@@ -95,7 +95,7 @@
    }
    a[href~="#"]{
       /* 选择器用于选取属性值中包含指定词汇的元素，只要是指定的属性，
-     	并且属性值列表中包含value，而不是在某个值中以value开头或结尾，*/
+     	并且属性值 列表 中包含value，而不是在某个值中以value开头或结尾，*/
    }
    a[href^="#"]{}  /* Element[attribute^="value"]匹配指定属性的指定value值开头的元素
    ，如果class中有多个value值，第一个值中的第一个字母不是指定的值，
@@ -214,18 +214,18 @@
 4. ``element::after``，同理3，最实用，一般用于清除浮动
 
    ```html
-   <head>
+   <header>
      <nav>
        bbb
      </nav>
      <div>
        aaa
      </div>
-   </head>
+   </header>
    ```
 
    ```css
-   head{
+   header{
      background:red;
    }
    nav{
@@ -238,7 +238,7 @@
    }     				 /*head中的两个元素的设置了浮动，则父元素的高度就会因为所有子元素都为浮动而变为0，
      						从而显示不出head的背景色*/
      						/* 因而需要在head最后面添加一个空标签，使它清除浮动*/
-   head::after{
+   header::after{
      content:"";      /* 添加的新元素的 内容为空。*/
      display:block;   /*. 添加的是快元素才行，才能够将父元素撑开。*/
    }
@@ -248,22 +248,20 @@
 
 5. ``element::selection``，表示文本内容如果被光标选中，则会出现的效果，例如背景色改变，字体大小改变等
 
-
-
-
+    
 
 ### CSS3 边框
 
 1. 圆角``border-radius``属性
 
-   - 语法 ``border:radius: 1~4 length|%``， 值为1～4，单位可以是长度也可以是%，四个值分别表示``左上``开始顺时针。
+   - 语法 ``border-radius: 1~4 length|%``， 值为1～4，单位可以是长度也可以是%，四个值分别表示``左上``开始顺时针。
 
      ```css
      div{
-      	width:800px;
+       width:800px;
        height:200px;
        border-radius:20px;  /* 边框就变成了圆角 */
-       							/* 如果写成%，则%是  分别相对宽和高的%，因而一个长方形，会出现特殊效果 */
+       					/* 如果写成%，则%是  分别相对宽和高的%，因而一个长方形，会出现特殊效果 */
      }
      ```
 
@@ -368,7 +366,7 @@
 
         ``background:linear-gradient(angle,color,color,color...)``
 
-        <img src="./images/Screen Shot 2019-10-24 at 8.04.58 pm.png" width="300px" height="300px"/>
+        <img src="../images/Screen Shot 2019-10-24 at 8.04.58 pm.png" width="300px" height="300px"/>
 
         ```css
         background:linear-gradient(45deg,red,yellow,blue)    /* 角度渐变，只影响中间的过渡成都，不影响起始位置和结束位置 */
@@ -507,7 +505,7 @@
 
    - 所以在实际应用中一般使用：.``woff``+``.eot``，即最佳网络格式配合ie格式的字体，有时候还要配合``.svg``格式字体，如下图
 
-     <img src="./images/Screen Shot 2019-10-24 at 11.37.30 pm.png" />
+     <img src="../images/Screen Shot 2019-10-24 at 11.37.30 pm.png" />
 
    - 例子
 
@@ -537,8 +535,6 @@
    - 获取特殊字体的一个网站，它能将一个字体上传后，再转换别的格式，你可以通过下载，获得兼容各个浏览器的字体文件
 
      <a href="https://www.fontsquirrel.com/tools/webfont-generator" >https://www.fontsquirrel.com/tools/webfont-generator</a>
-
-
 
 
 
@@ -669,7 +665,7 @@
        	-moz-transition-property: transform;
        	  -ms-transition-property:transform;
        	   -o-transition-property:transform;
-      			  transition-property:transform;
+      		  transition-property:transform;
      }
      div:hover{
        transform:rotate(180deg);   /*鼠标悬停时候旋转 */
@@ -677,7 +673,7 @@
        	-moz-transition-property: transform;
        	  -ms-transition-property:transform;
        	   -o-transition-property:transform;
-      			  transition-property:transform;
+      		  transition-property:transform;
      }
      ```
 
