@@ -62,7 +62,7 @@
     CREATE TABLE t2 LIKE t1;   # 通过t1，创建一个复制表t2
     ```
 
-    ![Screen Shot 2020-06-04 at 1.57.30 am](/Users/chenrui/Notes/DataBase/images/Screen Shot 2020-06-04 at 1.57.30 am.png)
+    <img src="./images/Screen Shot 2020-06-04 at 1.57.30 am.png">
 
 - ``R``：查询表
 
