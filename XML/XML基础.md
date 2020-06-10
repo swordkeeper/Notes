@@ -1,4 +1,4 @@
-# XML
+#   XML
 
 XML 是 ``Extensible Markup Lanuage``的缩写，又称为可扩展标记语言。
 
@@ -83,6 +83,8 @@ DTD通常是以单独的文件来保存。以``.dtd``为扩展名.
 
 <!-- 例如。-->
 <!DOCTYPE class SYSTEM "./class.dtd" > <!--加载当前目录下class.dtd文件下的 class元素的约束 到 STSTEM 本地范围 -->
+<!-- 网络来的dtd -->
+<!DOCTYPE class PUBLIC "class.dtd文件名" "dtd文件位置网络URL" > 
 ```
 
 
