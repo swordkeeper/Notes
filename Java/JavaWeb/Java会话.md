@@ -71,14 +71,23 @@
 
 3. cookie中有没有中文
 
-    - JDK8.5以后可以存储中文
+    - JDK8.5以后可以存储中文，但是特殊字符还是不支持，例如空格，换行等。所以建议还是用``URL编码``转换
+
     - JDK8.5以前一般需要转码，转码通常采用``URL编码``，格式%E2%A2%9A......
+
+    - ```java
+        // 对cookie.getValue()的值进行URL编解码
+        URLEncoder.encode(str, "utf-8"); // 用URLEncoder类对str进行URL编码
+        String value = URLEncoder.decode(backStr,"uft-8");  // 对backStr解码
+        ```
+
+        
 
 4. cookie获取范围有多大
 
-    - 默认情况下，cookie不会在多个项目之间共享
+    - 默认情况下，cookie不会在多个项目之间共享，只会在一个项目下多个服务之间共享
 
-    - 相同服务器，但是项目不同。通过``setPath(String path)``设置cookie的获取范围。默认情况下，path等于某个项目的虚拟目录。若要让其他的项目也能获取该cookie信息，可以更改该Path信息。例如，让所有项目都能访问某个path
+    - 相同服务器，但是项目不同。通过``setPath(String path)``设置cookie的获取范围。默认情况下，path等于某个项目的虚拟目录，即只能在所对应的项目下共享。若要让其他的项目也能获取该cookie信息，可以更改该Path信息。例如，让所有项目都能访问某个cookie
 
         ```java
         cookie.setPath("/");    // 设置cookie的访问范围为/，这样忽略了项目的虚拟目录。这样所有的项目都能获取该cookie
