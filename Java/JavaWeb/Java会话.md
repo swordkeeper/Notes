@@ -107,3 +107,84 @@
 1. Cookie存储数据在客户端，安全性较差
 2. 浏览器对于单个cookie的大小有限制(4KB)，以及同一个域名下的总cookie数量也有限制，大约20个左右。
 3. 因而cookie不能存储大数据。适用于存储少量，不信息敏感的数据
+
+
+
+
+
+### Session 
+
+#### 概念
+
+服务器端会话技术，在一次会话的多次请求之间共享数据，将数据保存在服务器端的对象``HttpSession``中。
+
+
+
+#### 使用步骤
+
+1. ``HttpSession``对象中的方法，该方式类似于域对象：
+
+    - setAttribute
+    - getAttribute
+    - removeAttribute
+
+2. 获取``HttpSession``对象
+
+    ```java
+    HttpSession session = request.getSession();
+    ```
+
+3. 设置数据
+
+    ```java
+    session.setAttribute("msg","hello");   // 一旦执行，数据msg=hello session的一个属性就被存储到服务器中了
+    ```
+
+4. 获取数据
+
+    ```java
+    Object obj = session.getAttribute("msg");  // 获取数据
+    ```
+
+
+
+#### 原理
+
+``Session`` 技术是依赖于``cookie``的。
+
+1. 在第一次获取session时，由于请求是没有携带cookie。则服务器会在创建session时会创建一个cookie。 其内容为（响应头格式）``Set-Cookie: JSESSIONID=3126a1239``。即创建一个Cookie，并设置SeesionId等于某一个值，来作为cookie的内容。
+
+2. 浏览器收到该cookie。当第二次访问时，则携带并发送该cookie
+
+3. 服务器第二次收到请求时，由于携带cookie。服务器解析该cookie，并找到该SessionId。对比服务器中存储的SessionId（内存中）。这样服务器就知道某个访问是否是同一个Session会话。
+
+    
+
+#### Session 细节
+
+1. 客户端关闭，服务器不关闭，两次Session默认情况下``不是同一个``。由于其依赖Cookie，默认情况下，关闭浏览器Cookie就被销毁了。
+2. 客户端不关闭，服务器关闭或重启，两次Session默认情况下``不是同一个``。由于服务器的SessionId是在内存中的，服务器重启，会使得客户端的Session数据与服务器中存储的SessionId匹配不到。这样所有客户端Session 全部失效。下面是解决该问题的方式（存储到硬盘），``钝化``和``活化``：
+    - 钝化，存储服务器内存中的SessionId到磁盘上。钝化文件到``work``临时文件夹，名字为``SESSION.ser``
+    - 活化，将存储文件重新加载到内存。Tomcat自动从``work``文件夹中读取文件``SESSION.ser``，读取完则删除文件
+    - Tomcat默认自动实现了钝化和活化功能
+    - ``Idea`` IDE下的Tomcat不能实现Tomcat上面的活化操作，它能实现钝化，但不能实现活化。因为Idea启动Tomcat时，首先会删除旧的work临时文件夹，然后创建一个新的work临时文件夹，用以启动新服务。这样work里面钝化文件就丢失。
+3. Session什么时候被销毁
+    - 服务器关闭
+    - session对象调用``invalidate()``方法
+    - session默认的失效时间，30分钟。可以在conf/web.xml下配置 Session-config元素中配置失效时间
+
+
+
+#### Session特点
+
+1. Session用于存储一次会话的多次请求数据，存在服务器端，并通过向客户端的cookie中设置SessionId来实现其匹配机制
+2. Session可以存储任意类型，任意大小的数据（由于实际存储的数据在服务器端，客户端只通过cookie存储一个SessionId
+3. Session与Cookie区别/换脸
+    - Session数据在服务器端，cookie在客户端
+    - Session数据没有大小限制，cookie有
+    - Session数据安全，cookie不安全
+
+
+
+
+
