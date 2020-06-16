@@ -297,6 +297,13 @@
    $("div").hide(3000).delay(2000).show(); //3秒内缓慢隐藏div元素。然后延迟2秒再显示出来
    ```
 
+   show(speed, easing, function)，其中可接受三个参数，分别代表出现的速度，方式，以及出现完毕执行的方法
+
+   - Speed:   Slow | normal | fast | 毫秒数
+   - Easing: swing | linear
+   - Fn:  回调函数
+   - 这三个参数，同理下面两种方法👇
+
 3. ``fadeIn()/fadeOut()``，淡入淡出元素，合起来可以用``fadeToggle()``。 
 
 4. ``slideDown()/slideUp()``，划入划出，合起来可以用``slideToggle()``
