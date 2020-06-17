@@ -1,4 +1,4 @@
- # Ajax and Json
+ #   Ajax and Json
 
 ## Ajax (Asynchronous Javascript and XML)
 
@@ -266,5 +266,42 @@ Json包含三种数据类型的值：
 
   
 
+  ## Json对象的使用
+
+  Json 可以和 Java对象相互转换。需要使用一些包，著名的包有``Jsonlib``，``Gson``，``fastjson``，``jackson``
+
+  ### Jackson使用方式
+
+  1. 导入Jackson jar 包
+  2. 创建Jackson核心对象 ObjectMapper
+  3. 调用ObjectMapper  相关方法和对象进行转化 
+
+  ```java
+  class Person{
+      private String name;
+      private Integer age; 
+      
+      @JsonIgnore  // 忽略birthday的字符串转化 
+      private Date birthday;
+      
+      @JsonFormat(pattern="yyyy-mm-dd")  // 进行Json转换时可以定义输出格式
+      private Date date;
+      
+      //...... getter setter方法
+  }
   
+  Person p = new Person("zhangsan",22）；
+                       
+  ObjectMapper om = new ObjectMapper();
+  om.writeAsString(p);  // 返回json 数据字符串
+  om.write(FILE, p);   // 写成json文件
+                        
+  Person pp =  om.read(jsonfile, Person.class);  // 读取一个jsonfile， 并传递一个类对象 
+  ```
+
+  4. 注解
+
+      ``@JsonIgnore``，这个注解添加到类成员变量上，在进行json转换时，就会被忽略
+
+      ``@JsonFormat``，这个注解添加，会对字符串进行排版 
 

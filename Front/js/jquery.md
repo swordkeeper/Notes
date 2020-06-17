@@ -329,3 +329,37 @@
      ```
 
      
+
+
+
+## 插件
+
+### 对象扩展
+
+``jQuery.fn.extend(Object)``该方法可以扩展jQuery所选择对象的方法。例如``$("#name")``
+
+```javascript
+$.fn.extend({  
+    check:function(){    // 定义了一个check方法 。这样所有的jQuery对象都可以调用check方法
+        alert("123");
+        this.prop("checked","true"); // 对调用的对象的属性进行一些操作
+    }
+})
+
+$("#bt").check();     // 这样jQuery对象就有了check()方法
+```
+
+
+
+``jQuery.extend(Object)``，该方法可以扩展全局jQuery对象。可以增强``$``
+
+```javascript
+$.extend({
+    max:function(a, b){  // 定义max方法
+        return a>b ? a, b;
+    }
+});
+    
+$.max(12, 22);
+```
+
