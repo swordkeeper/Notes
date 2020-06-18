@@ -83,18 +83,47 @@ Maven项目目录结构
 ```
 Maven项目名
 	src
-		main            代码主目录
+		main			代码主目录
 			java 		核心代码目录
 			resources 	核心代码配置目录
+			webapp		如果是web工程，还会有本目录，里面放置的都是web页面资源
+				js
+				css
+				img
 		test			测试主目录
 			java		测试核心代码目录
 			resources	测试资源配置目录
-		webapp			如果是web工程，还会有本目录，里面放置的都是web页面资源
-			js
-			css
-			img
+		
 		
 ```
 
 
 
+## Maven 命令
+
+1. ``Mvn clean``，清除本工程下的原始生成代码，用于重新生成干净的Maven工程环境。该命令会清除目录下的``target``目录
+2. ``mvn compile``，编译工程项目，会在本目录下生成``target``目录。该编译只是编译``src/main``下面的代码
+3. ``mvn test``，编译test目录下的代码， 并运行测试。该方法也会在target目录下生成相关的目录结构。若没有编译main中的主代码，该命令还会编译src/main下的代码
+4.  ``mvn package``，将test，main中的代码进行编译，然后并打包成war包存于target目录之下
+5. ``mvn install`` ，该命令不仅执行了``mvn package``命令的所有操作，他还将该包安装到了 ``maven 本地仓库`` 
+6. ``mvn deploy``，部署。将打包并安装的maven工程进行部署。部署之前需要对maven进行配置
+
+
+
+
+
+## Maven 项目配置
+
+Maven结构图如下
+
+<img src="../image/maven结构图.png" width=80%/>
+
+### 项目配置模型
+
+醒目配置模型，即对maven要构建的项目进行配置，也就是对``pom.xml``文件进行设置。POM表示 ``Project Object Model``项目对象模型
+
+该配置文件中包含三个大的部分：
+
+1. 项目自身信息(POM模型)
+2. 项目所依赖的Jar包的信息（依赖管理模型）
+3. 项目所用到的插件信息，包括JDK，Tomcat服务器配置，JDBC连接配置等。甚至maven命令，包括compile、test、install等都需要这些底层插件
