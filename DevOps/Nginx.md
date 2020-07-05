@@ -52,9 +52,9 @@ Nginx是一个可以安装到LInux 系统上的软件。它可以用作
 
     ```conf
     server{
-    	location / { 					# 表示配置服务器的 / 路径
-    		root html; 			    	# 表示配置的该路径 / ，映射到服务器的的 html 文件夹下
-    		index index.html index.htm;	   # 默认浏览这个文件夹下的这两个两个文件
+    	location / {					# 表示配置服务器的 / 路径
+    		root html;					# 表示配置的该路径 / ，映射到服务器的的 html 文件夹下
+    		index index.html index.htm;		# 默认浏览这个文件夹下的这两个两个文件
     	}
     }
     
@@ -78,16 +78,16 @@ Nginx是一个可以安装到LInux 系统上的软件。它可以用作
     	listen 80;
     	server_name 192.168.1.22;
     	location / {
-    		root index; 	 # 根目录指向服务器的index目录
-    		index index.html; # 默认返回页面为index.html
+    		root index;		# 根目录指向服务器的index目录
+    		index index.html;	# 默认返回页面为index.html
     	}
     }
     server{
     	listen 81;			# 另一项目监听81端口
     	server_name 192.168.1.22;   
     	location / {
-    		root resig; 	 # 根目录指向服务器的 resig 目录
-    		index register.html; # 默认返回页面为register.html
+    		root resig;		# 根目录指向服务器的 resig 目录
+    		index register.html;	# 默认返回页面为register.html
     	}
     }
     # 配置了两个服务器，在同一个物理服务器。不同项目放在不同目录下，通过nginx的访问端口进行隔离访问，实现虚拟主机
@@ -108,8 +108,8 @@ Nginx是一个可以安装到LInux 系统上的软件。它可以用作
 
     ```conf
     server{
-    	listen 80;				 # 端口相同
-    	server_name www.index.com;   # 虽然IP相同，即DNS解析出的IP地址相同，但是域名仍然不同
+    	listen 80;				# 端口相同
+    	server_name www.index.com; 	# 虽然IP相同，即DNS解析出的IP地址相同，但是域名仍然不同
     	location / {
     		root index; 	 # 根目录指向服务器的index目录
     		index index.html; # 默认返回页面为index.html
@@ -119,7 +119,7 @@ Nginx是一个可以安装到LInux 系统上的软件。它可以用作
     	listen 80;				  # 端口相同
     	server_name www.regist.com;   # 域名不同
     	location / {
-    		root resig; 	 # 根目录指向服务器的 resig 目录
+    		root resig;		# 根目录指向服务器的 resig 目录
     		index register.html; # 默认返回页面为register.html
     	}
     }
